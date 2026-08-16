@@ -6,6 +6,11 @@ public class Aegis {
                 + " / ___ \\  __/ (_| | \\__ \\\n"
                 + "/_/   \\_\\___|\\__, |_|___/\n"
                 + "              |___/      \n";
-        System.out.println(banner);
+
+        String message = "Hi! This is Aegis!\n"
+                + "What can I do for you today?\n"
+                + "Bye. See you soon!";
+
+        System.out.println(banner + "\n" + message);
     }
 }
