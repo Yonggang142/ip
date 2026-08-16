@@ -21,30 +21,67 @@ public class Aegis {
 
         Scanner scanner = new Scanner(System.in);
 
-        String[] storage = new String[100];
+        Task[] storage = new Task[100];
+
         int count = 0;
 
         while (true) {
 
             String command = scanner.nextLine();
+            String[] parts = command.split(" ", 2);
+            String action = parts[0];
 
-            if (command.equals("bye")) {
-                System.out.println(line);
-                System.out.println(endMessage);
-                System.out.println(line);
-                break;
-            } else if (command.equals("list")) {
-                System.out.println(line);
-                for (int i = 0; i < count; i++) {
-                    System.out.println((i + 1) + ". " + storage[i]);
+
+            switch (action) {
+                case "bye": {
+                    System.out.println(line);
+                    System.out.println(endMessage);
+                    System.out.println(line);
+                    return;
                 }
-                System.out.println(line);
-            } else {
-                System.out.println(line);
-                System.out.println("added: " + command);
-                System.out.println(line);
-                storage[count] = command;
-                count += 1;
+
+                case "list": {
+                    System.out.println(line);
+                    for (int i = 0; i < count; i++) {
+                        Task currentTask = storage[i];
+
+                        System.out.println((i + 1) + "." + currentTask.getStatusIcon() + " " + storage[i]);
+                    }
+                    System.out.println(line);
+                    break;
+                }
+
+                case "mark": {
+                    int markIndex = Integer.parseInt(parts[1]) - 1;
+                    Task currentTask = storage[markIndex];
+                    currentTask.mark();
+                    System.out.println(line);
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println("  [X] " + storage[markIndex]);
+                    System.out.println(line);
+                    break;
+                }
+
+                case "unmark": {
+                    int unmarkIndex = Integer.parseInt(parts[1]) - 1;
+                    Task currentTask = storage[unmarkIndex];
+                    currentTask.unmark();
+
+                    System.out.println(line);
+                    System.out.println("OK, I've marked this task as not done yet:");
+                    System.out.println("  [ ] " + storage[unmarkIndex]);
+                    System.out.println(line);
+                    break;
+                }
+
+                default: {
+                    System.out.println(line);
+                    System.out.println("added: " + command);
+                    System.out.println(line);
+                    storage[count] = new Task(command);
+                    count += 1;
+                    break;
+                }
             }
         }
 
