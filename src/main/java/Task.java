@@ -5,7 +5,7 @@ public class Task {
 
     public Task(String description) {
         this.description = description;
-        this.isDone = isDone;
+        this.isDone = false;
     }
 
     public String getStatusIcon() {
@@ -18,6 +18,11 @@ public class Task {
 
     public void mark() {
         this.isDone = true;
+    }
+
+    @Override
+    public String toString() {
+        return description;
     }
 
 }

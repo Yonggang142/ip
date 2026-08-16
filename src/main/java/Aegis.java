@@ -42,10 +42,11 @@ public class Aegis {
 
                 case "list": {
                     System.out.println(line);
+                    System.out.println("Here are your tasks in the list:");
                     for (int i = 0; i < count; i++) {
                         Task currentTask = storage[i];
 
-                        System.out.println((i + 1) + "." + currentTask.getStatusIcon() + " " + storage[i]);
+                        System.out.println((i + 1) + "." + "[" + currentTask.getStatusIcon() + "]" + " " + storage[i]);
                     }
                     System.out.println(line);
                     break;
