@@ -12,21 +12,39 @@ public class Aegis {
                 + "What can I do for you today?\n";
         String endMessage = "Bye. See you soon!";
 
-        System.out.println(banner + "\n" + startMessage);
+
+        String line = "____________________________________________________________";
+        System.out.println(line);
+        System.out.println(banner);
+        System.out.println(startMessage);
+        System.out.println(line);
 
         Scanner scanner = new Scanner(System.in);
 
+        String[] storage = new String[100];
+        int count = 0;
 
         while (true) {
 
             String command = scanner.nextLine();
 
             if (command.equals("bye")) {
+                System.out.println(line);
                 System.out.println(endMessage);
-
-            } else {
-                System.out.println(command);
+                System.out.println(line);
                 break;
+            } else if (command.equals("list")) {
+                System.out.println(line);
+                for (int i = 0; i < count; i++) {
+                    System.out.println((i + 1) + ". " + storage[i]);
+                }
+                System.out.println(line);
+            } else {
+                System.out.println(line);
+                System.out.println("added: " + command);
+                System.out.println(line);
+                storage[count] = command;
+                count += 1;
             }
         }
 
