@@ -30,7 +30,7 @@ public class Aegis {
             String command = scanner.nextLine();
             String[] parts = command.split(" ", 2);
             String action = parts[0];
-
+            String details = parts.length > 1 ? parts[1] : "";
 
             switch (action) {
                 case "bye": {
@@ -42,11 +42,11 @@ public class Aegis {
 
                 case "list": {
                     System.out.println(line);
-                    System.out.println("Here are your tasks in the list:");
+                    System.out.println("Here are the tasks in the list:");
                     for (int i = 0; i < count; i++) {
                         Task currentTask = storage[i];
 
-                        System.out.println((i + 1) + "." + "[" + currentTask.getStatusIcon() + "]" + " " + storage[i]);
+                        System.out.println((i + 1) + "." + storage[i]);
                     }
                     System.out.println(line);
                     break;
@@ -58,7 +58,7 @@ public class Aegis {
                     currentTask.mark();
                     System.out.println(line);
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("  [X] " + storage[markIndex]);
+                    System.out.println(storage[markIndex]);
                     System.out.println(line);
                     break;
                 }
@@ -70,16 +70,66 @@ public class Aegis {
 
                     System.out.println(line);
                     System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("  [ ] " + storage[unmarkIndex]);
+                    System.out.println(storage[unmarkIndex]);
                     System.out.println(line);
                     break;
                 }
 
-                default: {
+                case "todo": {
+
+                    Task newTask = new ToDo(details);
+                    storage[count] = newTask;
+                    count += 1;
+                    System.out.println(line);
+                    System.out.println("OK, I've added a new task: ");
+                    System.out.println(newTask);
+                    System.out.println(line);
+                    break;
+                }
+
+                case "deadline": {
+
+
+                    String[] eventParts = details.split(" /by ", 2);
+                    String description = eventParts[0];
+                    String timeDetails = eventParts[1];
+
+                    Task newTask = new Deadline(description, timeDetails);
+                    storage[count] = newTask;
+                    count += 1;
+                    System.out.println(line);
+                    System.out.println("OK, I've added a new task: ");
+                    System.out.println(newTask);
+                    System.out.println(line);
+                    break;
+                }
+
+                case "event": {
+
+                    String[] eventParts = details.split(" /from ", 2);
+                    String description = eventParts[0];
+                    String timeDetails = eventParts[1];
+
+                    String[] timeParts = timeDetails.split(" /to ", 2);
+                    String from = timeParts[0];
+                    String to = timeParts[1];
+
+
+                    Task newTask = new Event(description, from, to);
+                    storage[count] = newTask;
+                    count += 1;
+                    System.out.println(line);
+                    System.out.println("OK, I've added a new task: ");
+                    System.out.println(newTask);
+                    System.out.println(line);
+                    break;
+                }
+
+                 default: {
                     System.out.println(line);
                     System.out.println("added: " + command);
                     System.out.println(line);
-                    storage[count] = new Task(command);
+                    storage[count] = new ToDo(command);
                     count += 1;
                     break;
                 }

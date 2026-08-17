@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
 
     protected String description;
     protected boolean isDone;
@@ -20,9 +20,12 @@ public class Task {
         this.isDone = true;
     }
 
+    public abstract String getTypeIcon(); // overriden by subclasses
+
+
     @Override
     public String toString() {
-        return description;
+        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description;
     }
 
 }
