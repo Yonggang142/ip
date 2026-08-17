@@ -53,6 +53,7 @@ public class Aegis {
                 }
 
                 case "mark": {
+
                     int markIndex = Integer.parseInt(parts[1]) - 1;
                     Task currentTask = storage[markIndex];
                     currentTask.mark();
@@ -83,6 +84,7 @@ public class Aegis {
                     System.out.println(line);
                     System.out.println("OK, I've added a new task: ");
                     System.out.println(newTask);
+                    System.out.println("Now you have " + count + " tasks in the list");
                     System.out.println(line);
                     break;
                 }
@@ -100,6 +102,7 @@ public class Aegis {
                     System.out.println(line);
                     System.out.println("OK, I've added a new task: ");
                     System.out.println(newTask);
+                    System.out.println("Now you have " + count + " tasks in the list");
                     System.out.println(line);
                     break;
                 }
@@ -121,7 +124,9 @@ public class Aegis {
                     System.out.println(line);
                     System.out.println("OK, I've added a new task: ");
                     System.out.println(newTask);
+                    System.out.println("Now you have " + count + " tasks in the list");
                     System.out.println(line);
+
                     break;
                 }
 
@@ -135,6 +140,7 @@ public class Aegis {
                 }
             }
         }
-
     }
+
+
 }
