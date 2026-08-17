@@ -1,8 +1,14 @@
+/**
+ * Represents a task that takes place from a start time to an end time.
+ */
 public class Event extends Task {
 
     protected String start;
     protected String end;
 
+    /**
+     * Creates an event task with a description, start time, and end time.
+     */
     public Event(String description, String start, String end) {
         super(description);
         this.start = start;
@@ -10,12 +16,18 @@ public class Event extends Task {
 
     }
 
+    /**
+     * Returns the type icon for event tasks.
+     */
     @Override
     public String getTypeIcon() {
         return "E";
     }
 
 
+    /**
+     * Returns the display form of this event task.
+     */
     @Override
     public String toString() {
         return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description + " (from: " + start + " to: " + end + ")";

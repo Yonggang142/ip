@@ -1,4 +1,10 @@
+/**
+ * Represents an error caused by invalid user input in Aegis.
+ */
 public class AegisException extends Exception {
+    /**
+     * Creates an exception with a message that can be shown to the user.
+     */
     public AegisException(String message) {
         super(message);
     }

@@ -1,7 +1,14 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+/**
+ * Runs the Aegis chatbot, which manages tasks through command-line input.
+ */
 public class Aegis {
+    /**
+     * Starts the chatbot and processes user commands until the user enters {@code bye}.
+     */
     public static void main(String[] args) {
         String banner = "    _              _     \n"
                 + "   / \\   ___  __ _(_)___ \n"
@@ -182,6 +189,9 @@ public class Aegis {
 
         }
     }
+    /**
+     * Creates a todo task from the command details.
+     */
     private static Task createTodoTask(String details) throws AegisException {
         if (details.trim().isEmpty()) {
             throw new AegisException("The description of a todo cannot be empty.");
@@ -192,6 +202,9 @@ public class Aegis {
     }
 
 
+    /**
+     * Creates a deadline task from command details containing a description and value.
+     */
     private static Task createDeadlineTask(String details) throws AegisException {
         if (!details.contains(" /by ")) {
             throw new AegisException("Please include /by for deadlines.");
@@ -212,6 +225,9 @@ public class Aegis {
         return new Deadline(description, by);
     }
 
+    /**
+     * Creates an event task from command details containing a description, {@code /from}, and {@code /to}.
+     */
     private static Task createEventTask(String details) throws AegisException {
         if (!details.contains(" /from ")) {
             throw new AegisException("Please include /from for events.");
