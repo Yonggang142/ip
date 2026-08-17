@@ -59,7 +59,7 @@ public class Aegis {
 
                         }
 
-                        int markIndex = Integer.parseInt(details) - 1;
+                        int markIndex = Integer.parseInt(details.trim()) - 1;
 
                         if (markIndex < 0 || markIndex >= count) {
                             throw new AegisException("Sorry, that task number does not exist.");
@@ -81,7 +81,7 @@ public class Aegis {
 
                         }
 
-                        int unmarkIndex = Integer.parseInt(parts[1]) - 1;
+                        int unmarkIndex = Integer.parseInt(details.trim()) - 1;
 
                         if (unmarkIndex < 0 || unmarkIndex >= count) {
                             throw new AegisException("Sorry, that task number does not exist.");
@@ -195,17 +195,20 @@ public class Aegis {
             throw new AegisException("Please include /from for events.");
         }
 
-        if (!details.contains(" /to ")) {
-            throw new AegisException("Please include /to for events.");
-        }
-
         String[] eventParts = details.split(" /from ", 2);
         String description = eventParts[0];
         String timeDetails = eventParts[1];
 
         String[] timeParts = timeDetails.split(" /to ", 2);
+        if (timeParts.length < 2) {
+            throw new AegisException("Please include /to for events.");
+        }
         String from = timeParts[0];
         String to = timeParts[1];
+
+        if (description.trim().isEmpty()) {
+            throw new AegisException("The description of an event cannot be empty.");
+        }
 
         if (from.trim().isEmpty()) {
             throw new AegisException("starting time cannot be empty.");
