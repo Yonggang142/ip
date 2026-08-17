@@ -1,3 +1,5 @@
+
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Aegis {
     public static void main(String[] args) {
@@ -21,9 +23,7 @@ public class Aegis {
 
         Scanner scanner = new Scanner(System.in);
 
-        Task[] storage = new Task[100];
-
-        int count = 0;
+        ArrayList<Task> storage = new ArrayList<>();
 
         while (true) {
             try {
@@ -44,11 +44,32 @@ public class Aegis {
 
                         System.out.println(line);
                         System.out.println("Here are the tasks in the list:");
-                        for (int i = 0; i < count; i++) {
-                            Task currentTask = storage[i];
+                        for (int i = 0; i < storage.size(); i++) {
 
-                            System.out.println((i + 1) + "." + storage[i]);
+                            System.out.println((i + 1) + "." + storage.get(i));
                         }
+                        System.out.println(line);
+                        break;
+                    }
+
+                    case "delete": {
+                        if (details.trim().isEmpty()) {
+                            throw new AegisException("Please give me a task number to delete.");
+                        }
+
+                        int deleteIndex = Integer.parseInt(details.trim()) - 1;
+
+                        if (deleteIndex < 0 || deleteIndex >= storage.size()) {
+                            throw new AegisException("Sorry, that task number does not exist.");
+                        }
+
+                        Task deletedTask = storage.get(deleteIndex);
+
+                        storage.remove(deleteIndex);
+                        System.out.println(line);
+                        System.out.println("I've deleted this task for you");
+                        System.out.println(deletedTask);
+                        System.out.println("Now you have " + storage.size() + " tasks in the list.");
                         System.out.println(line);
                         break;
                     }
@@ -61,15 +82,15 @@ public class Aegis {
 
                         int markIndex = Integer.parseInt(details.trim()) - 1;
 
-                        if (markIndex < 0 || markIndex >= count) {
+                        if (markIndex < 0 || markIndex >= storage.size()) {
                             throw new AegisException("Sorry, that task number does not exist.");
                         }
 
-                        Task currentTask = storage[markIndex];
+                        Task currentTask = storage.get(markIndex);
                         currentTask.mark();
                         System.out.println(line);
                         System.out.println("Nice! I've marked this task as done:");
-                        System.out.println(storage[markIndex]);
+                        System.out.println(storage.get(markIndex));
                         System.out.println(line);
                         break;
 
@@ -77,22 +98,22 @@ public class Aegis {
 
                     case "unmark": {
                         if (details.trim().isEmpty()) {
-                            throw new AegisException("Please give me a task number to mark.");
+                            throw new AegisException("Please give me a task number to unmark.");
 
                         }
 
                         int unmarkIndex = Integer.parseInt(details.trim()) - 1;
 
-                        if (unmarkIndex < 0 || unmarkIndex >= count) {
+                        if (unmarkIndex < 0 || unmarkIndex >= storage.size()) {
                             throw new AegisException("Sorry, that task number does not exist.");
                         }
 
-                        Task currentTask = storage[unmarkIndex];
+                        Task currentTask = storage.get(unmarkIndex);
                         currentTask.unmark();
 
                         System.out.println(line);
                         System.out.println("OK, I've marked this task as not done yet:");
-                        System.out.println(storage[unmarkIndex]);
+                        System.out.println(storage.get(unmarkIndex));
                         System.out.println(line);
                         break;
 
@@ -101,12 +122,12 @@ public class Aegis {
                     case "todo": {
 
                         Task newTask = createTodoTask(details);
-                        storage[count] = newTask;
-                        count += 1;
+                        storage.add(newTask);
+
                         System.out.println(line);
                         System.out.println("OK, I've added a new task: ");
                         System.out.println(newTask);
-                        System.out.println("Now you have " + count + " tasks in the list");
+                        System.out.println("Now you have " + storage.size() + " tasks in the list");
                         System.out.println(line);
                         break;
                     }
@@ -114,13 +135,12 @@ public class Aegis {
                     case "deadline": {
 
                         Task newTask = createDeadlineTask(details);
-                        storage[count] = newTask;
-                        count += 1;
+                        storage.add(newTask);
 
                         System.out.println(line);
                         System.out.println("Got it. I've added this task:");
                         System.out.println(newTask);
-                        System.out.println("Now you have " + count + " tasks in the list.");
+                        System.out.println("Now you have " + storage.size() + " tasks in the list.");
                         System.out.println(line);
                         break;
                     }
@@ -128,16 +148,18 @@ public class Aegis {
                     case "event": {
 
                         Task newTask = createEventTask(details);
-                        storage[count] = newTask;
-                        count += 1;
+                        storage.add(newTask);
+
                         System.out.println(line);
                         System.out.println("OK, I've added a new task: ");
                         System.out.println(newTask);
-                        System.out.println("Now you have " + count + " tasks in the list");
+                        System.out.println("Now you have " + storage.size() + " tasks in the list");
                         System.out.println(line);
 
                         break;
                     }
+
+
 
                     default: {
                         System.out.println(line);
