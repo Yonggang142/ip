@@ -1,26 +1,28 @@
 /**
  * Represents a to-do type task in the Aegis task list.
  */
-
 public class ToDo extends Task {
 
     /**
-     * Creates a to-do task with the given description.
+     * Returns void
+     * Creates a to-do task.
      *
      * @param description Description of the task.
+     * @param isDone Whether the task has been marked as done.
      */
-    public ToDo(String description) {
-        super(description);
+    public ToDo(String description, boolean isDone) {
+        super(description, isDone);
     }
 
-    /**
-     * Returns the type icon for to-do tasks.
-     *
-     * @return Type icon for to-do tasks.
-     */
     @Override
     public String getTypeIcon() {
         return "T";
+    }
+
+
+    @Override
+    public String getFileSaveFormat() {
+        return "T | " + (isDone ? "1" : "0") + " | " + description;
     }
 
 }
