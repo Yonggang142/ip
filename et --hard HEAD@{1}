@@ -1,7 +1,7 @@
 [33m14d9ced[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbranch-A-MoreOOP[m[33m, [m[1;33mtag: [m[1;33mLevel-8[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
 [33mdee9a55[m HEAD@{1}: checkout: moving from master to branch-A-MoreOOP
 [33m14d9ced[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbranch-A-MoreOOP[m[33m, [m[1;33mtag: [m[1;33mLevel-8[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{2}: checkout: moving from branch-A-MoreOOP to master
-[33mdee9a55[m HEAD@{3}: commit: Added aegis.task.Ui, aegis.Storage, aegis.Parser and aegis.task.TaskList classes
+[33mdee9a55[m HEAD@{3}: commit: Added aegis.Ui, aegis.Storage, aegis.Parser and aegis.TaskList classes
 [33m14d9ced[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbranch-A-MoreOOP[m[33m, [m[1;33mtag: [m[1;33mLevel-8[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{4}: checkout: moving from master to branch-A-MoreOOP
 [33m14d9ced[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbranch-A-MoreOOP[m[33m, [m[1;33mtag: [m[1;33mLevel-8[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{5}: merge branch-Level-8: Merge made by the 'ort' strategy.
 [33md352da5[m[33m ([m[1;33mtag: [m[1;33mLevel-7[m[33m)[m HEAD@{6}: checkout: moving from branch-Level-8 to master
@@ -23,7 +23,7 @@
 [33m40515f0[m HEAD@{22}: checkout: moving from 94ce97a707964ff07348820c0b82a94fe1d48737 to HEAD~1
 [33m94ce97a[m HEAD@{23}: commit (amend): Fixed minor mistakes regards to formatting
 [33mc46457a[m[33m ([m[1;33mtag: [m[1;33mLevel-4[m[33m)[m HEAD@{24}: checkout: moving from 0771fc4dc5ed7eff8f90f01ee64905445678a9b9 to HEAD~1
-[33m0771fc4[m HEAD@{25}: commit (amend): Handled errors relating to invalid task index, missing /to /from /by for aegis.Event and aegis.Deadline tasks
+[33m0771fc4[m HEAD@{25}: commit (amend): Handled errors relating to invalid task index, missing /to /from /by for aegis.task.Event and aegis.task.Deadline tasks
 [33ma698e91[m HEAD@{26}: checkout: moving from 0c1173448d2c31fd118f3a5c8f1b6b97adf5cd74 to HEAD~1
 [33m0c11734[m HEAD@{27}: commit (amend): Handled extra edge cases including having tasks followed with whitespaces
 [33mb7461e1[m HEAD@{28}: checkout: moving from 83d4f9068b4b9ea63684c51bcf93124f5ed8b6ce to HEAD~1

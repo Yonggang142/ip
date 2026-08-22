@@ -80,7 +80,7 @@ Bye. See you soon!
 ____________________________________________________________
 ```
 
-## TC03 - Malformed aegis.Deadline Then Continue
+## TC03 - Malformed aegis.task.Deadline Then Continue
 
 Aim: Verify that a deadline without `/by` shows an error and does not stop the chatbot.
 
@@ -121,7 +121,7 @@ Bye. See you soon!
 ____________________________________________________________
 ```
 
-## TC04 - Malformed aegis.Event Then Continue
+## TC04 - Malformed aegis.task.Event Then Continue
 
 Aim: Verify that an event without `/to` shows an error and does not stop the chatbot.
 

@@ -1,4 +1,6 @@
-package aegis.task;
+package aegis;
+
+import aegis.task.Task;
 
 public class Ui {
 
