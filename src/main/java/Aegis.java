@@ -47,6 +47,43 @@ public class Aegis {
 
         }
 
+        try {
+            Scanner s = new Scanner(file);
+            while (s.hasNext()) {
+                String currLine = s.nextLine();
+                String[] parts = currLine.split(" ");
+                String identifier = parts[0];
+
+                switch (identifier) {
+                    case "todo": {
+                        if (parts.length != 2) {
+                            throw new AegisException("Incorrect todo format in file");
+                        }
+                        storage.add(new ToDo(parts[1]));
+
+                    }
+                    case "deadline": {
+                        if (parts.length != 3) {
+                            throw new AegisException("Incorrect deadline format in file");
+                        }
+                        storage.add(new Deadline(parts[1], parts[2]));
+                    }
+
+                    case "event": {
+                        if (parts.length != 4) {
+                            throw new AegisException("Incorrect event format in file");
+                        }
+                        storage.add(new Event(parts[1], parts[2], parts[3]));
+                    }
+
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Cannot find the missing file: " + e.getMessage());
+        } catch (AegisException e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.println(line);
         System.out.println(banner);
