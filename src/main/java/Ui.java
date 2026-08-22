@@ -1,0 +1,90 @@
+import java.util.Scanner;
+
+public class Ui {
+
+    private static final String startMessage = """
+            Hi! This is Aegis!
+            What can I do for you today?
+            """;
+
+    private static final String line = "_____________________________________________________________";
+
+    private static final String endMessage = "Bye. See you soon!";
+
+    private static final String banner = """
+                _              _    \s
+               / \\   ___  __ _(_)___\s
+              / _ \\ / _ \\/ _` | / __|
+             / ___ \\  __/ (_| | \\__ \\
+            /_/   \\_\\___|\\__, |_|___/
+                          |___/     \s
+            """;
+
+
+    public void showError(String message) {
+        System.out.println(line);
+        System.out.println(message);
+        System.out.println(line);
+    }
+
+    public void showStartMessage() {
+        System.out.println(line);
+        System.out.println(banner);
+        System.out.println(startMessage);
+        System.out.println(line);
+    }
+
+    public void showLoadingError() {
+        System.out.println("Error with loading tasks from storage");
+    }
+
+    public void showEndMessage() {
+        System.out.println(line);
+        System.out.println(endMessage);
+        System.out.println(line);
+    }
+
+    public void showDefaultMessage() {
+        System.out.println(line);
+        System.out.println("Sorry, I have no idea what it means!");
+        System.out.println(line);
+    }
+
+    public void showTaskAdded(Task task, int size) {
+        System.out.println(line);
+        System.out.println("OK, I've added a new task: ");
+        System.out.println(task);
+        System.out.println("Now you have " + size + " tasks in the list");
+        System.out.println(line);
+    }
+
+    public void showTaskList(TaskList taskList) {
+        System.out.println(line);
+        System.out.println("Here are the tasks in the list:");
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.println((i + 1) + "." + taskList.get(i));
+        }
+        System.out.println(line);
+    }
+
+    public void showDeletedTask(Task task, int size) {
+        System.out.println(line);
+        System.out.println("I've deleted this task for you");
+        System.out.println(task);
+        System.out.println("Now you have " + size + " tasks in the list.");
+        System.out.println(line);
+    }
+
+    public void showTaskStatus(Task task, boolean isDone) {
+        System.out.println(line);
+        if (isDone) {
+            System.out.println("Nice! I've marked this task as done:");
+        } else {
+            System.out.println("OK, I've marked this task as not done yet:");
+        }
+        System.out.println(task);
+        System.out.println(line);
+    }
+
+
+}

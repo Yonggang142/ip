@@ -1,0 +1,89 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.time.LocalDate;
+
+public class Storage {
+
+    private String filePath;
+
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public ArrayList<Task> load() throws AegisException, IOException {
+        Path path = Paths.get(filePath);
+
+        ArrayList<Task> taskList = new ArrayList<>();
+        if (!Files.exists(path)) {
+            if (path.getParent() != null) {
+                Files.createDirectories(path.getParent());
+            }
+            Files.createFile(path);
+        }
+
+        Scanner s = new Scanner(path);
+        while (s.hasNext()) {
+            String currLine = s.nextLine();
+            String[] parts = currLine.split(" \\| ");
+            if (parts.length < 2) {
+                throw new AegisException("Incorrect format in file");
+            }
+            String identifier = parts[0];
+            String status = parts[1];
+            if (!status.equals("0") && !status.equals("1")) {
+                throw new AegisException("Incorrect task status in file");
+            }
+            boolean isDone = status.equals("1");
+            switch (identifier) {
+                case "T": {
+                    if (parts.length != 3) {
+                        throw new AegisException("Incorrect todo format in file");
+                    }
+                    taskList.add(new ToDo(parts[2], isDone));
+                    break;
+                }
+                case "D": {
+                    if (parts.length != 4) {
+                        throw new AegisException("Incorrect deadline format in file");
+                    }
+                    taskList.add(new Deadline(parts[2], LocalDate.parse(parts[3]), isDone));
+                    break;
+                }
+                case "E": {
+                    if (parts.length != 5) {
+                        throw new AegisException("Incorrect event format in file");
+                    }
+                    taskList.add(new Event(parts[2],
+                            LocalDate.parse(parts[3]), LocalDate.parse(parts[4]), isDone));
+                    break;
+                }
+                default:
+                    throw new AegisException("Unknown information in file");
+            }
+        }
+        return taskList;
+    }
+
+
+    /**
+     * Returns void.
+     * Saves tasks to the data file.
+     */
+    public void saveToFile(TaskList taskList) throws IOException {
+        StringBuilder textToAdd = new StringBuilder();
+        for (int i = 0; i < taskList.size(); i++) {
+            textToAdd.append(taskList.get(i).getFileSaveFormat())
+                    .append(System.lineSeparator());
+        }
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd.toString());
+        fw.close();
+
+
+    }
+}
