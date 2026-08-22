@@ -1,9 +1,12 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents a task that should be completed by a specified time.
  */
 public class Deadline extends Task {
 
-    protected String end;
+    protected LocalDate end;
 
     /**
      * Returns void
@@ -13,7 +16,7 @@ public class Deadline extends Task {
      * @param end Deadline time by which the task should be completed.
      * @param isDone Whether the task has been marked as done.
      */
-    public Deadline(String description, String end, boolean isDone) {
+    public Deadline(String description, LocalDate end, boolean isDone) {
         super(description, isDone);
         this.end = end;
 
@@ -27,7 +30,8 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description + " (by: " + end + ")";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description + " (by: " + end.format(formatter) + ")";
     }
 
     @Override

@@ -1,18 +1,21 @@
-
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
 import java.io.IOException;
-import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.io.FileWriter;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 /**
  * Runs the Aegis chatbot, which manages tasks through command-line input.
  */
 public class Aegis {
 
-    private static final String startMessage = "Hi! This is Aegis!\n"
-            + "What can I do for you today?\n";
+    private static final String startMessage = """
+            Hi! This is Aegis!
+            What can I do for you today?
+            """;
 
     private static final String line = "_____________________________________________________________";
 
@@ -20,12 +23,14 @@ public class Aegis {
 
     private static final String filePath = "./data/Aegis.txt";
 
-    private static final String banner = "    _              _     \n"
-            + "   / \\   ___  __ _(_)___ \n"
-            + "  / _ \\ / _ \\/ _` | / __|\n"
-            + " / ___ \\  __/ (_| | \\__ \\\n"
-            + "/_/   \\_\\___|\\__, |_|___/\n"
-            + "              |___/      \n";
+    private static final String banner = """
+                _              _    \s
+               / \\   ___  __ _(_)___\s
+              / _ \\ / _ \\/ _` | / __|
+             / ___ \\  __/ (_| | \\__ \\
+            /_/   \\_\\___|\\__, |_|___/
+                          |___/     \s
+            """;
 
 
     private static final ArrayList<Task> storage = new ArrayList<>();
@@ -36,17 +41,17 @@ public class Aegis {
      */
     public static void initBot() {
 
-        File file = new File(filePath);
-        if (file.exists()) {
+        Path path = Paths.get(filePath);
+        if (Files.exists(path)) {
             System.out.println("File already exists");
         } else {
 
             try {
-                file.getParentFile().mkdirs();
-                boolean isCreated = file.createNewFile();
-                if (isCreated) {
-                    System.out.println("File has been created");
+                if (path.getParent() != null && !Files.exists(path.getParent())) {
+                    Files.createDirectories(path.getParent());
                 }
+                Files.createFile(path);
+                System.out.println("File has been created");
             } catch (IOException e) {
                 System.out.println("Error creating file: " + e.getMessage());
                 return;
@@ -55,7 +60,7 @@ public class Aegis {
         }
 
         try {
-            Scanner s = new Scanner(file);
+            Scanner s = new Scanner(path);
             while (s.hasNext()) {
                 String currLine = s.nextLine();
                 String[] parts = currLine.split(" \\| ");
@@ -84,7 +89,8 @@ public class Aegis {
                         if (parts.length != 4) {
                             throw new AegisException("Incorrect deadline format in file");
                         }
-                        storage.add(new Deadline(parts[2], parts[3], isDone));
+                        LocalDate by = LocalDate.parse(parts[3]);
+                        storage.add(new Deadline(parts[2], by, isDone));
                         break;
                     }
 
@@ -92,7 +98,10 @@ public class Aegis {
                         if (parts.length != 5) {
                             throw new AegisException("Incorrect event format in file");
                         }
-                        storage.add(new Event(parts[2], parts[3], parts[4], isDone));
+
+                        LocalDate start = LocalDate.parse(parts[3]);
+                        LocalDate end = LocalDate.parse(parts[4]);
+                        storage.add(new Event(parts[2], start, end, isDone));
                         break;
                     }
 
@@ -104,8 +113,11 @@ public class Aegis {
                 }
 
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("Cannot find the missing file: " + e.getMessage());
+
+        } catch (DateTimeParseException e) {
+            System.out.println("Dates in file do not adhere to parsable YYYY-MM-DD format.");
         } catch (AegisException e) {
             System.out.println(e.getMessage());
         }
@@ -124,8 +136,7 @@ public class Aegis {
     public static void saveToFile() {
         StringBuilder textToAdd = new StringBuilder();
 
-        for (int i = 0; i < storage.size(); i++) {
-            Task task = storage.get(i);
+        for (Task task : storage) {
             textToAdd.append(task.getFileSaveFormat()).append(System.lineSeparator());
         }
 
@@ -356,12 +367,17 @@ public class Aegis {
             throw new AegisException("The deadline time cannot be empty.");
         }
 
-        return new Deadline(description, by, false);
+        try {
+            LocalDate byDate = LocalDate.parse(by);
+            return new Deadline(description, byDate, false);
+        } catch (DateTimeParseException e) {
+            throw new AegisException("Dates must be in YYYY-MM-DD format.");
+        }
     }
 
     /**
      * Returns a deadline task.
-     * Method creates a event task and returns it
+     * Method creates an event task and returns it
      *
      * @param details Description, start time, and end time entered after the event command.
      * @throws AegisException If /from or /to is missing, the description is empty, the start time is empty,
@@ -388,15 +404,21 @@ public class Aegis {
         }
 
         if (from.trim().isEmpty()) {
-            throw new AegisException("starting time cannot be empty.");
+            throw new AegisException("Starting time cannot be empty.");
         }
 
         if (to.trim().isEmpty()) {
-            throw new AegisException("ending time cannot be empty");
+            throw new AegisException("Ending time cannot be empty");
+        }
+        try {
+            LocalDate fromDate = LocalDate.parse(from);
+            LocalDate toDate = LocalDate.parse(to);
+            return new Event(description, fromDate, toDate, false);
+
+        } catch (DateTimeParseException e) {
+            throw new AegisException("Dates must be in YYYY-MM-DD format.");
         }
 
-
-        return new Event(description, from, to, false);
     }
 
 
