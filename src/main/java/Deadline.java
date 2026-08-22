@@ -3,14 +3,15 @@
  */
 public class Deadline extends Task {
 
-    /** Deadline time by which the task should be completed. */
     protected String end;
 
     /**
-     * Creates a deadline task with a description and deadline time.
+     * Returns void
+     * Constructor to create a deadline task.
      *
      * @param description Description of the task.
      * @param end Deadline time by which the task should be completed.
+     * @param isDone Whether the task has been marked as done.
      */
     public Deadline(String description, String end, boolean isDone) {
         super(description, isDone);
@@ -18,20 +19,20 @@ public class Deadline extends Task {
 
     }
 
-    /**
-     * Returns the type icon for deadline tasks.
-     */
+
     @Override
     public String getTypeIcon() {
         return "D";
     }
 
-    /**
-     * Returns the display form of this deadline task.
-     */
     @Override
     public String toString() {
         return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description + " (by: " + end + ")";
+    }
+
+    @Override
+    public String getFileSaveFormat() {
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + end;
     }
 
 }

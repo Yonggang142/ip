@@ -4,6 +4,8 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+
 /**
  * Runs the Aegis chatbot, which manages tasks through command-line input.
  */
@@ -28,6 +30,10 @@ public class Aegis {
 
     private static final ArrayList<Task> storage = new ArrayList<>();
 
+    /**
+     * Returns void.
+     * Initializes the chatbot and loads saved tasks from the data file before showing the greeting.
+     */
     public static void initBot() {
 
         File file = new File(filePath);
@@ -36,6 +42,7 @@ public class Aegis {
         } else {
 
             try {
+                file.getParentFile().mkdirs();
                 boolean isCreated = file.createNewFile();
                 if (isCreated) {
                     System.out.println("File has been created");
@@ -51,18 +58,19 @@ public class Aegis {
             Scanner s = new Scanner(file);
             while (s.hasNext()) {
                 String currLine = s.nextLine();
-                String[] parts = currLine.split(" ");
+                String[] parts = currLine.split(" \\| ");
 
                 if (parts.length < 2) {
                     throw new AegisException("Incorrect format in file");
                 }
                 String identifier = parts[0];
                 String status = parts[1];
-                boolean isDone = false;
 
-                if (Integer.parseInt(status) == 1) {
-                    isDone = true;
+                if (!status.equals("0") && !status.equals("1")) {
+                    throw new AegisException("Incorrect task status in file");
                 }
+
+                boolean isDone = status.equals("1");
 
                 switch (identifier) {
                     case "T": {
@@ -70,13 +78,14 @@ public class Aegis {
                             throw new AegisException("Incorrect todo format in file");
                         }
                         storage.add(new ToDo(parts[2], isDone));
-
+                        break;
                     }
                     case "D": {
                         if (parts.length != 4) {
                             throw new AegisException("Incorrect deadline format in file");
                         }
                         storage.add(new Deadline(parts[2], parts[3], isDone));
+                        break;
                     }
 
                     case "E": {
@@ -84,6 +93,12 @@ public class Aegis {
                             throw new AegisException("Incorrect event format in file");
                         }
                         storage.add(new Event(parts[2], parts[3], parts[4], isDone));
+                        break;
+                    }
+
+                    default: {
+                        throw new AegisException("Unknown information in file");
+
                     }
 
                 }
@@ -101,6 +116,34 @@ public class Aegis {
         System.out.println(line);
     }
 
+
+    /**
+     * Returns void.
+     * Saves tasks to the data file.
+     */
+    public static void saveToFile() {
+        StringBuilder textToAdd = new StringBuilder();
+
+        for (int i = 0; i < storage.size(); i++) {
+            Task task = storage.get(i);
+            textToAdd.append(task.getFileSaveFormat()).append(System.lineSeparator());
+        }
+
+        try {
+            FileWriter fw = new FileWriter(filePath);
+            fw.write(textToAdd.toString());
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+
+
+    }
+
+    /**
+     * Returns void.
+     * Processes user commands until the user exits.
+     */
     public static void main(String[] args) {
 
         initBot();
@@ -153,6 +196,7 @@ public class Aegis {
                         System.out.println(deletedTask);
                         System.out.println("Now you have " + storage.size() + " tasks in the list.");
                         System.out.println(line);
+                        saveToFile();
                         break;
                     }
 
@@ -174,6 +218,7 @@ public class Aegis {
                         System.out.println("Nice! I've marked this task as done:");
                         System.out.println(storage.get(markIndex));
                         System.out.println(line);
+                        saveToFile();
                         break;
 
                     }
@@ -197,6 +242,7 @@ public class Aegis {
                         System.out.println("OK, I've marked this task as not done yet:");
                         System.out.println(storage.get(unmarkIndex));
                         System.out.println(line);
+                        saveToFile();
                         break;
 
                     }
@@ -211,6 +257,8 @@ public class Aegis {
                         System.out.println(newTask);
                         System.out.println("Now you have " + storage.size() + " tasks in the list");
                         System.out.println(line);
+
+                        saveToFile();
                         break;
                     }
 
@@ -224,6 +272,8 @@ public class Aegis {
                         System.out.println(newTask);
                         System.out.println("Now you have " + storage.size() + " tasks in the list.");
                         System.out.println(line);
+
+                        saveToFile();
                         break;
                     }
 
@@ -238,6 +288,7 @@ public class Aegis {
                         System.out.println("Now you have " + storage.size() + " tasks in the list");
                         System.out.println(line);
 
+                        saveToFile();
                         break;
                     }
 
@@ -264,10 +315,12 @@ public class Aegis {
 
         }
     }
+
     /**
-     * Creates a to-do task from the command details.
+     * Returns a to-do task.
+     * Method creates a to-do task and returns it
      *
-     * @param details Description text entered after the todo command.
+     * @param details Description text entered after the to-do command.
      * @throws AegisException If the description is empty.
      */
     private static Task createTodoTask(String details) throws AegisException {
@@ -279,9 +332,9 @@ public class Aegis {
 
     }
 
-
     /**
-     * Creates a deadline task from command details containing a description and deadline time.
+     * Returns a deadline task.
+     * Method creates a deadline task and returns it
      *
      * @param details Description and deadline time entered after the deadline command.
      * @throws AegisException If the /by separator is missing, the description is empty, or the deadline time is empty.
@@ -307,7 +360,8 @@ public class Aegis {
     }
 
     /**
-     * Creates an event task from command details containing a description, start time, and end time.
+     * Returns a deadline task.
+     * Method creates a event task and returns it
      *
      * @param details Description, start time, and end time entered after the event command.
      * @throws AegisException If /from or /to is missing, the description is empty, the start time is empty,
