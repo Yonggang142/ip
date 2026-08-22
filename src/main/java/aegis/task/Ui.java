@@ -1,4 +1,4 @@
-import java.util.Scanner;
+package aegis.task;
 
 public class Ui {
 

@@ -1,5 +1,7 @@
+package aegis.task;
+
 /**
- * Represents a task in the Aegis task list.
+ * Represents a task in the aegis.Aegis task list.
  */
 public abstract class Task {
 

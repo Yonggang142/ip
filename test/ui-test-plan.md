@@ -1,6 +1,6 @@
 # UI Test Plan
 
-This file records command-line UI test cases for Aegis. Each test case is run as one chatbot session: the commands are sent to `Aegis` in order, and the full console output is compared with the expected output.
+This file records command-line UI test cases for aegis.Aegis. Each test case is run as one chatbot session: the commands are sent to `aegis.Aegis` in order, and the full console output is compared with the expected output.
 
 ## TC01 - Add Todo Then List
 
@@ -21,7 +21,7 @@ ____________________________________________________________
 /_/   \_\___|\__, |_|___/
               |___/      
 
-Hi! This is Aegis!
+Hi! This is aegis.Aegis!
 What can I do for you today?
 
 ____________________________________________________________
@@ -59,7 +59,7 @@ ____________________________________________________________
 /_/   \_\___|\__, |_|___/
               |___/      
 
-Hi! This is Aegis!
+Hi! This is aegis.Aegis!
 What can I do for you today?
 
 ____________________________________________________________
@@ -80,7 +80,7 @@ Bye. See you soon!
 ____________________________________________________________
 ```
 
-## TC03 - Malformed Deadline Then Continue
+## TC03 - Malformed aegis.Deadline Then Continue
 
 Aim: Verify that a deadline without `/by` shows an error and does not stop the chatbot.
 
@@ -100,7 +100,7 @@ ____________________________________________________________
 /_/   \_\___|\__, |_|___/
               |___/      
 
-Hi! This is Aegis!
+Hi! This is aegis.Aegis!
 What can I do for you today?
 
 ____________________________________________________________
@@ -121,7 +121,7 @@ Bye. See you soon!
 ____________________________________________________________
 ```
 
-## TC04 - Malformed Event Then Continue
+## TC04 - Malformed aegis.Event Then Continue
 
 Aim: Verify that an event without `/to` shows an error and does not stop the chatbot.
 
@@ -141,7 +141,7 @@ ____________________________________________________________
 /_/   \_\___|\__, |_|___/
               |___/      
 
-Hi! This is Aegis!
+Hi! This is aegis.Aegis!
 What can I do for you today?
 
 ____________________________________________________________
@@ -162,7 +162,7 @@ Bye. See you soon!
 ____________________________________________________________
 ```
 
-## TC05 - Delete Task Then List
+## TC05 - Delete aegis.task.Task Then List
 
 Aim: Verify that deleting a task removes it from the list and shifts the remaining tasks forward.
 
@@ -183,7 +183,7 @@ ____________________________________________________________
 /_/   \_\___|\__, |_|___/
               |___/      
 
-Hi! This is Aegis!
+Hi! This is aegis.Aegis!
 What can I do for you today?
 
 ____________________________________________________________

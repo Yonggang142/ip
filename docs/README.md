@@ -1,4 +1,4 @@
-# Aegis User Guide
+# aegis.Aegis User Guide
 
 // Update the title above to match the actual product name
 
