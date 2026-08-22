@@ -1,3 +1,5 @@
+package aegis.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -13,7 +15,7 @@ public class Deadline extends Task {
      * Constructor to create a deadline task.
      *
      * @param description Description of the task.
-     * @param end Deadline time by which the task should be completed.
+     * @param end aegis.task.Deadline time by which the task should be completed.
      * @param isDone Whether the task has been marked as done.
      */
     public Deadline(String description, LocalDate end, boolean isDone) {

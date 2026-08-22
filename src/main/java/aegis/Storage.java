@@ -1,3 +1,10 @@
+package aegis;
+
+import aegis.task.Deadline;
+import aegis.task.Event;
+import aegis.task.Task;
+import aegis.task.ToDo;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;

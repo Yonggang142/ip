@@ -1,8 +1,10 @@
+package aegis;
+
 import java.util.Scanner;
 import java.io.IOException;
 
 /**
- * Runs the Aegis chatbot, which manages tasks through command-line input.
+ * Runs the aegis.Aegis chatbot, which manages tasks through command-line input.
  */
 public class Aegis {
 
@@ -29,10 +31,10 @@ public class Aegis {
 
     /**
      * Returns void.
-     * Creates an Aegis object and calls run() on it
+     * Creates an aegis.Aegis object and calls run() on it
      */
     public static void main(String[] args) {
-        new Aegis("data/Aegis.txt").run();
+        new Aegis("data/aegis.Aegis.txt").run();
     }
 
 

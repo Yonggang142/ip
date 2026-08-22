@@ -1,3 +1,7 @@
+package aegis;
+
+import aegis.task.Task;
+
 import java.io.IOException;
 
 public class Command {
