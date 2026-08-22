@@ -16,8 +16,8 @@ public class Event extends Task {
      * @param start Start time of the event.
      * @param end End time of the event.
      */
-    public Event(String description, String start, String end) {
-        super(description);
+    public Event(String description, String start, String end, boolean isDone) {
+        super(description, isDone);
         this.start = start;
         this.end = end;
 

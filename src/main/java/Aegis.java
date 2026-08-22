@@ -52,28 +52,38 @@ public class Aegis {
             while (s.hasNext()) {
                 String currLine = s.nextLine();
                 String[] parts = currLine.split(" ");
+
+                if (parts.length < 2) {
+                    throw new AegisException("Incorrect format in file");
+                }
                 String identifier = parts[0];
+                String status = parts[1];
+                boolean isDone = false;
+
+                if (Integer.parseInt(status) == 1) {
+                    isDone = true;
+                }
 
                 switch (identifier) {
-                    case "todo": {
-                        if (parts.length != 2) {
+                    case "T": {
+                        if (parts.length != 3) {
                             throw new AegisException("Incorrect todo format in file");
                         }
-                        storage.add(new ToDo(parts[1]));
+                        storage.add(new ToDo(parts[2], isDone));
 
                     }
-                    case "deadline": {
-                        if (parts.length != 3) {
+                    case "D": {
+                        if (parts.length != 4) {
                             throw new AegisException("Incorrect deadline format in file");
                         }
-                        storage.add(new Deadline(parts[1], parts[2]));
+                        storage.add(new Deadline(parts[2], parts[3], isDone));
                     }
 
-                    case "event": {
-                        if (parts.length != 4) {
+                    case "E": {
+                        if (parts.length != 5) {
                             throw new AegisException("Incorrect event format in file");
                         }
-                        storage.add(new Event(parts[1], parts[2], parts[3]));
+                        storage.add(new Event(parts[2], parts[3], parts[4], isDone));
                     }
 
                 }
@@ -265,7 +275,7 @@ public class Aegis {
             throw new AegisException("The description of a todo cannot be empty.");
 
         }
-        return new ToDo(details);
+        return new ToDo(details, false);
 
     }
 
@@ -293,7 +303,7 @@ public class Aegis {
             throw new AegisException("The deadline time cannot be empty.");
         }
 
-        return new Deadline(description, by);
+        return new Deadline(description, by, false);
     }
 
     /**
@@ -332,7 +342,7 @@ public class Aegis {
         }
 
 
-        return new Event(description, from, to);
+        return new Event(description, from, to, false);
     }
 
 
