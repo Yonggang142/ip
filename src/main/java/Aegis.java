@@ -7,7 +7,9 @@ import java.util.Scanner;
  */
 public class Aegis {
     /**
-     * Starts the chatbot and processes user commands until the user enters {@code bye}.
+     * Starts the chatbot and processes user commands until the user exits.
+     *
+     * @param args Command-line arguments.
      */
     public static void main(String[] args) {
         String banner = "    _              _     \n"
@@ -190,7 +192,11 @@ public class Aegis {
         }
     }
     /**
-     * Creates a todo task from the command details.
+     * Creates a to-do task from the command details.
+     *
+     * @param details Description text entered after the todo command.
+     * @return To-do task created from the command details.
+     * @throws AegisException If the description is empty.
      */
     private static Task createTodoTask(String details) throws AegisException {
         if (details.trim().isEmpty()) {
@@ -203,7 +209,11 @@ public class Aegis {
 
 
     /**
-     * Creates a deadline task from command details containing a description and value.
+     * Creates a deadline task from command details containing a description and deadline time.
+     *
+     * @param details Description and deadline time entered after the deadline command.
+     * @return Deadline task created from the command details.
+     * @throws AegisException If the /by separator is missing, the description is empty, or the deadline time is empty.
      */
     private static Task createDeadlineTask(String details) throws AegisException {
         if (!details.contains(" /by ")) {
@@ -226,7 +236,12 @@ public class Aegis {
     }
 
     /**
-     * Creates an event task from command details containing a description, {@code /from}, and {@code /to}.
+     * Creates an event task from command details containing a description, start time, and end time.
+     *
+     * @param details Description, start time, and end time entered after the event command.
+     * @return Event task created from the command details.
+     * @throws AegisException If /from or /to is missing, the description is empty, the start time is empty,
+     *         or the end time is empty.
      */
     private static Task createEventTask(String details) throws AegisException {
         if (!details.contains(" /from ")) {

@@ -4,13 +4,20 @@
 
 public abstract class Task {
 
+    /**
+     * Description of the task.
+     */
     protected String description;
+
+    /**
+     * Whether this task has been marked as done.
+     */
     protected boolean isDone;
 
     /**
      * Creates a task with the given description and marks it as not done.
      *
-     * @param description the task description
+     * @param description Description of the task.
      */
     public Task(String description) {
         this.description = description;
@@ -19,6 +26,8 @@ public abstract class Task {
 
     /**
      * Returns the display icon for the task completion status.
+     *
+     * @return Display icon for the task completion status.
      */
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
@@ -40,12 +49,16 @@ public abstract class Task {
 
     /**
      * Returns the one-letter icon used to identify this task's type.
+     *
+     * @return One-letter icon used to identify this task's type.
      */
     public abstract String getTypeIcon(); // overriden by subclasses
 
 
     /**
      * Returns the display form of this task.
+     *
+     * @return Display form of this task.
      */
     @Override
     public String toString() {

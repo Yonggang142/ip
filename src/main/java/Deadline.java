@@ -3,10 +3,16 @@
  */
 public class Deadline extends Task {
 
+    /**
+     * Deadline time by which the task should be completed.
+     */
     protected String end;
 
     /**
      * Creates a deadline task with a description and deadline time.
+     *
+     * @param description Description of the task.
+     * @param end Deadline time by which the task should be completed.
      */
     public Deadline(String description, String end) {
         super(description);
@@ -16,6 +22,8 @@ public class Deadline extends Task {
 
     /**
      * Returns the type icon for deadline tasks.
+     *
+     * @return Type icon for deadline tasks.
      */
     @Override
     public String getTypeIcon() {
@@ -24,6 +32,8 @@ public class Deadline extends Task {
 
     /**
      * Returns the display form of this deadline task.
+     *
+     * @return Display form of this deadline task.
      */
     @Override
     public String toString() {
