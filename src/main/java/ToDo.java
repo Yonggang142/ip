@@ -1,7 +1,6 @@
 /**
  * Represents a to-do type task in the Aegis task list.
  */
-
 public class ToDo extends Task {
 
     /**
@@ -15,8 +14,6 @@ public class ToDo extends Task {
 
     /**
      * Returns the type icon for to-do tasks.
-     *
-     * @return Type icon for to-do tasks.
      */
     @Override
     public String getTypeIcon() {

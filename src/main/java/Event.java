@@ -3,14 +3,10 @@
  */
 public class Event extends Task {
 
-    /**
-     * Start time of the event.
-     */
+    /** Start time of the event. */
     protected String start;
 
-    /**
-     * End time of the event.
-     */
+    /** End time of the event. */
     protected String end;
 
     /**
@@ -29,8 +25,6 @@ public class Event extends Task {
 
     /**
      * Returns the type icon for event tasks.
-     *
-     * @return Type icon for event tasks.
      */
     @Override
     public String getTypeIcon() {
@@ -40,8 +34,6 @@ public class Event extends Task {
 
     /**
      * Returns the display form of this event task.
-     *
-     * @return Display form of this event task.
      */
     @Override
     public String toString() {

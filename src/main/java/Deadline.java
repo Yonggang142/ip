@@ -3,9 +3,7 @@
  */
 public class Deadline extends Task {
 
-    /**
-     * Deadline time by which the task should be completed.
-     */
+    /** Deadline time by which the task should be completed. */
     protected String end;
 
     /**
@@ -22,8 +20,6 @@ public class Deadline extends Task {
 
     /**
      * Returns the type icon for deadline tasks.
-     *
-     * @return Type icon for deadline tasks.
      */
     @Override
     public String getTypeIcon() {
@@ -32,8 +28,6 @@ public class Deadline extends Task {
 
     /**
      * Returns the display form of this deadline task.
-     *
-     * @return Display form of this deadline task.
      */
     @Override
     public String toString() {
