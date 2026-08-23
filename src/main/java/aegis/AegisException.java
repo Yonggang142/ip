@@ -1,7 +1,7 @@
 package aegis;
 
 /**
- * Represents an error caused by invalid user input in aegis.Aegis.
+ * Represents an error caused by invalid user input in Aegis.
  */
 public class AegisException extends Exception {
     /**

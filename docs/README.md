@@ -1,4 +1,4 @@
-# aegis.Aegis User Guide
+# Aegis User Guide
 
 // Update the title above to match the actual product name
 
@@ -13,7 +13,7 @@
 // Give examples of usage
 
 Example: `keyword (optional arguments)`
-
+``
 // A description of the expected outcome goes here
 
 ```

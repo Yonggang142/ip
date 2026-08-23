@@ -1,7 +1,7 @@
 package aegis.task;
 
 /**
- * Represents a to-do type task in the aegis.Aegis task list.
+ * Represents a to-do type task in the Aegis task list.
  */
 public class ToDo extends Task {
 

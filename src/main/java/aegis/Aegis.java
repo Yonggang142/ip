@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.io.IOException;
 
 /**
- * Runs the aegis.Aegis chatbot, which manages tasks through command-line input.
+ * Runs the Aegis chatbot, which manages tasks through command-line input.
  */
 public class Aegis {
 
@@ -31,10 +31,10 @@ public class Aegis {
 
     /**
      * Returns void.
-     * Creates an aegis.Aegis object and calls run() on it
+     * Creates an Aegis object and calls run() on it
      */
     public static void main(String[] args) {
-        new Aegis("data/aegis.Aegis.txt").run();
+        new Aegis("data/Aegis.txt").run();
     }
 
 
@@ -43,6 +43,7 @@ public class Aegis {
      * Executes the chatbot interactions
      */
     public void run() {
+        ui.showStartMessage();
         Parser parser = new Parser();
         Scanner scanner = new Scanner(System.in);
         boolean isEnd = false;
