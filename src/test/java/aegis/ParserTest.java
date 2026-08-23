@@ -13,7 +13,7 @@ public class ParserTest {
     @Test
     public void parseTodo_validDescription_returnsToDo() throws AegisException {
         Command command = new Parser().parse("todo borrow book");
-        assertEquals("todo", command.getCommandName()); // need getter
+        assertEquals("todo", command.getCommandName());
         Task task = command.getTask();
         assertInstanceOf(ToDo.class, task);
         assertEquals("borrow book", task.toString());

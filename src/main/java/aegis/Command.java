@@ -36,7 +36,6 @@ public class Command {
      * @param tasks TaskList class for the current chat session.
      * @param ui UI class.
      * @param storage Storage class.
-     *
      */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
         switch (commandName) {
@@ -86,7 +85,6 @@ public class Command {
         }
     }
 
-
     public String getCommandName() {
         return commandName;
     }
@@ -95,7 +93,4 @@ public class Command {
         return task;
     }
 
-    public int getIndex() {
-        return index;
-    }
 }
