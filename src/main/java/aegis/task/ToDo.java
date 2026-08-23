@@ -1,13 +1,12 @@
 package aegis.task;
 
 /**
- * Represents a to-do type task in the Aegis task list.
+ * Represents a ToDo type task in the Aegis task list.
  */
 public class ToDo extends Task {
 
     /**
-     * Returns void
-     * Creates a to-do task.
+     * Constructs a ToDo task.
      *
      * @param description Description of the task.
      * @param isDone Whether the task has been marked as done.

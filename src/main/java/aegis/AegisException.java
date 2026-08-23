@@ -1,7 +1,7 @@
 package aegis;
 
 /**
- * Represents an error caused by invalid user input in Aegis.
+ * Represents an error that occurs within the Aegis chatbot.
  */
 public class AegisException extends Exception {
     /**

@@ -30,8 +30,7 @@ public class Aegis {
 
 
     /**
-     * Returns void.
-     * Creates an Aegis object and calls run() on it
+     * Creates an Aegis object and calls run() on it.
      */
     public static void main(String[] args) {
         new Aegis("data/Aegis.txt").run();
@@ -39,8 +38,7 @@ public class Aegis {
 
 
     /**
-     * Returns void.
-     * Executes the chatbot interactions
+     * Executes the chatbot interactions.
      */
     public void run() {
         ui.showStartMessage();
