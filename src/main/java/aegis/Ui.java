@@ -2,6 +2,10 @@ package aegis;
 
 import aegis.task.Task;
 
+/**
+ * Handles the user interface for the Aegis application.
+ * Provides methods to display messages, task lists and errors.
+ */
 public class Ui {
 
     private static final String startMessage = """
@@ -22,13 +26,18 @@ public class Ui {
                           |___/     \s
             """;
 
-
+    /**
+     * Displays the error message.
+     */
     public void showError(String message) {
         System.out.println(line);
         System.out.println(message);
         System.out.println(line);
     }
 
+    /**
+     * Displays the starting message.
+     */
     public void showStartMessage() {
         System.out.println(line);
         System.out.println(banner);
@@ -36,22 +45,34 @@ public class Ui {
         System.out.println(line);
     }
 
+    /**
+     * Displays a loading error message.
+     */
     public void showLoadingError() {
         System.out.println("Error with loading tasks from storage");
     }
 
+    /**
+     * Displays the ending message after user says "bye"
+     */
     public void showEndMessage() {
         System.out.println(line);
         System.out.println(endMessage);
         System.out.println(line);
     }
 
+    /**
+     * Displays a message when the command is invalid.
+     */
     public void showDefaultMessage() {
         System.out.println(line);
         System.out.println("Sorry, I have no idea what it means!");
         System.out.println(line);
     }
 
+    /**
+     * Displays a message when a task is being added.
+     */
     public void showTaskAdded(Task task, int size) {
         System.out.println(line);
         System.out.println("OK, I've added a new task: ");
@@ -60,6 +81,9 @@ public class Ui {
         System.out.println(line);
     }
 
+    /**
+     * Displays the numbered list of all tasks.
+     */
     public void showTaskList(TaskList taskList) {
         System.out.println(line);
         System.out.println("Here are the tasks in the list:");
@@ -69,6 +93,9 @@ public class Ui {
         System.out.println(line);
     }
 
+    /**
+     * Displays a confirmation that a task has been deleted
+     */
     public void showDeletedTask(Task task, int size) {
         System.out.println(line);
         System.out.println("I've deleted this task for you");
@@ -77,6 +104,9 @@ public class Ui {
         System.out.println(line);
     }
 
+    /**
+     * Displays a confirmation that a task has been marked or unmarked
+     */
     public void showTaskStatus(Task task, boolean isDone) {
         System.out.println(line);
         if (isDone) {

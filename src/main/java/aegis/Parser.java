@@ -8,6 +8,12 @@ import aegis.task.ToDo;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+
+/**
+ * Creates a Command object depending on the user's command.
+ * Accepts multiple distinct user command types.
+ */
+
 public class Parser {
 
     public Command parse(String command) throws AegisException {
@@ -27,27 +33,43 @@ public class Parser {
             case "event":
                 return new Command("event", createEventTask(details), 0);
             case "delete":
-                return new Command("delete", null, parseIndex(details, "delete"));
+                return new Command("delete", null, parseIndex(details));
             case "mark":
-                return new Command("mark", null, parseIndex(details, "mark"));
+                return new Command("mark", null, parseIndex(details));
             case "unmark":
-                return new Command("unmark", null, parseIndex(details, "unmark"));
+                return new Command("unmark", null, parseIndex(details));
             default:
                 throw new AegisException("Sorry, I have no idea what it means!");
         }
     }
 
-    private int parseIndex(String details, String commandName) throws AegisException {
+
+    /**
+     * Parses the index provided by the user, for marking and unmarking of tasks.
+     *
+     * @param details Contains the numerical string, as provided by the user.
+     * @return The parsed index.
+     * @throws AegisException If the description is empty or the task number is invalid..
+     */
+    private int parseIndex(String details) throws AegisException {
         if (details.trim().isEmpty()) {
-            throw new AegisException("Please give me a task number to " + commandName + ".");
+            throw new AegisException("Please give me a task number");
         }
         try {
             return Integer.parseInt(details.trim()) - 1;
         } catch (NumberFormatException e) {
-            throw new AegisException("Please give me a valid task number.");
+            throw new AegisException("Please give me a valid task number");
         }
     }
 
+    /**
+     * Creates a ToDo task from the given details.
+     * The details must contain a non-empty description.
+     *
+     * @param details The description of the todo task, as provided by the user.
+     * @return A new ToDo task with the given description.
+     * @throws AegisException If the description is empty or blank.
+     */
     private Task createTodoTask(String details) throws AegisException {
         if (details.trim().isEmpty()) {
             throw new AegisException("The description of a todo cannot be empty.");
@@ -55,6 +77,16 @@ public class Parser {
         return new ToDo(details, false);
     }
 
+    /**
+     * Creates a Deadline task from the given details.
+     * The details must contain a "/by" separator, a non-empty description,
+     * and a valid date in the YYYY-MM-DD format.
+     *
+     * @param details The user input containing the description and deadline date.
+     * @return A new Deadline task with the parsed description and date.
+     * @throws AegisException If the "/by" separator is missing, the description or
+     *                        date is empty, or the date is not in YYYY-MM-DD format.
+     */
     private Task createDeadlineTask(String details) throws AegisException {
         if (!details.contains(" /by ")) {
             throw new AegisException("Please include /by for deadlines.");
@@ -75,6 +107,17 @@ public class Parser {
         }
     }
 
+    /**
+     * Creates an Event task from the given details.
+     * The details must contain "/from" and "/to" separators, a non-empty description,
+     * and valid dates in the YYYY-MM-DD format.
+     *
+     * @param details The user input containing the description and event dates.
+     * @return A new Event task with the parsed description and dates.
+     * @throws AegisException If the "/from" or "/to" separators are missing, the
+     *                        description or dates are empty, or the dates are not
+     *                        in YYYY-MM-DD format.
+     */
     private Task createEventTask(String details) throws AegisException {
         if (!details.contains(" /from ")) {
             throw new AegisException("Please include /from for events.");

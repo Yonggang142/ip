@@ -4,21 +4,40 @@ import aegis.task.Task;
 
 import java.io.IOException;
 
+/**
+ * Performs the chatbot tasks depending on the command type.
+ * Accepts multiple distinct user command types.
+ */
 public class Command {
     private final String commandName;
     private final Task task;
     private final int index;
 
+    /**
+     * Constructs a Command object identified by its action string,
+     * optional task, and task index.
+     */
     public Command(String commandName, Task task, int index) {
         this.commandName = commandName;
         this.task = task;
         this.index = index;
     }
 
+    /**
+     * Checks if the command is equal to "bye" to end the conversation.
+     */
     public boolean hasEnded() {
         return commandName.equals("bye");
     }
 
+    /**
+     * Executes the task based on the corresponding command.
+     *
+     * @param tasks TaskList class for the current chat session.
+     * @param ui UI class.
+     * @param storage Storage class.
+     *
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
         switch (commandName) {
             case "todo":

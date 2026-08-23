@@ -10,8 +10,7 @@ public abstract class Task {
     protected boolean isDone;
 
     /**
-     * Returns void
-     * Creates a task.
+     * Constructs a task.
      *
      * @param description Description of the task.
      * @param isDone Whether the task has been marked as done.
@@ -38,7 +37,7 @@ public abstract class Task {
     }
 
     /**
-     * Returns the one-letter icon used to identify this task's type.
+     * Returns the letter icon used to identify this task's type.
      */
     public abstract String getTypeIcon();
 

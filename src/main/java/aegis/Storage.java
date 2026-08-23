@@ -14,13 +14,32 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
 
+/**
+ * Handles loading and saving tasks to a local storage file specified by the filePath.
+ */
+
 public class Storage {
 
     private String filePath;
 
+    /**
+     * Creates a Storage object that reads and writes to the given file path.
+     */
+
     public Storage(String filePath) {
         this.filePath = filePath;
     }
+
+
+    /**
+     * Loads all tasks from the storage file.
+     * If the file does not exist, it will be created (along with any parent directories).
+     *
+     * @return The list of tasks loaded from the file.
+     * @throws AegisException If a line in the file is malformed, contains an unknown
+     *                        task type, or has an invalid status or date.
+     * @throws IOException If the file cannot be read or created.
+     */
 
     public ArrayList<Task> load() throws AegisException, IOException {
         Path path = Paths.get(filePath);
@@ -78,9 +97,13 @@ public class Storage {
 
 
     /**
-     * Returns void.
-     * Saves tasks to the data file.
+     * Saves all tasks in the provided list to the storage file.
+     * Each task is written on its own line using its file save format.
+     *
+     * @param taskList The list of tasks to save to the file.
+     * @throws IOException If the file cannot be written to.
      */
+
     public void saveToFile(TaskList taskList) throws IOException {
         StringBuilder textToAdd = new StringBuilder();
         for (int i = 0; i < taskList.size(); i++) {

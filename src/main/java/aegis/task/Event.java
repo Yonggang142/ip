@@ -13,8 +13,7 @@ public class Event extends Task {
     protected LocalDate end;
 
     /**
-     * Returns void
-     * Creates an event task.
+     * Constructs an event task.
      *
      * @param description Description of the task.
      * @param start Start time of the event.
