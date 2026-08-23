@@ -66,4 +66,17 @@ public class Command {
                 break;
         }
     }
+
+
+    public String getCommandName() {
+        return commandName;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public int getIndex() {
+        return index;
+    }
 }
