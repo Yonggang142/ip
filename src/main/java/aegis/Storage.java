@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.time.LocalDate;
 
 /**
  * Handles loading and saving tasks to a local storage file specified by the filePath.
@@ -20,7 +20,7 @@ import java.time.LocalDate;
 
 public class Storage {
 
-    private String filePath;
+    private final String filePath;
 
     /**
      * Creates a Storage object that reads and writes to the given file path.

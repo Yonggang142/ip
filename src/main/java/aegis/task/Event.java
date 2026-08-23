@@ -24,7 +24,6 @@ public class Event extends Task {
         super(description, isDone);
         this.start = start;
         this.end = end;
-
     }
 
     @Override
@@ -36,7 +35,9 @@ public class Event extends Task {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
-        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description + " (from: " + start.format(formatter) + " to: " + end.format(formatter) + ")";
+        return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description
+                + " (from: " + start.format(formatter)
+                + " to: " + end.format(formatter) + ")";
     }
 
 

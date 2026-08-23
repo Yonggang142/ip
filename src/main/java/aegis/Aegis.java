@@ -1,7 +1,6 @@
 package aegis;
-
-import java.util.Scanner;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Runs the Aegis chatbot, which manages tasks through command-line input.
@@ -12,6 +11,9 @@ public class Aegis {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructs an Aegis chatbot with a filePath specified to store chatlogs.
+     */
     public Aegis(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -25,9 +27,6 @@ public class Aegis {
             tasks = new TaskList();
         }
     }
-
-
-
 
     /**
      * Creates an Aegis object and calls run() on it.

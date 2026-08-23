@@ -13,9 +13,15 @@ import java.time.format.DateTimeParseException;
  * Creates a Command object depending on the user's command.
  * Accepts multiple distinct user command types.
  */
-
 public class Parser {
 
+    /**
+     * Parses the user command and creates the corresponding Command object.
+     *
+     * @param command The full user input string.
+     * @return The Command object representing the parsed action.
+     * @throws AegisException If the command is unrecognized.
+     */
     public Command parse(String command) throws AegisException {
         String[] parts = command.split(" ", 2);
         String action = parts[0];
@@ -49,7 +55,7 @@ public class Parser {
      *
      * @param details Contains the numerical string, as provided by the user.
      * @return The parsed index.
-     * @throws AegisException If the description is empty or the task number is invalid..
+     * @throws AegisException If the description is empty or the task number is invalid.
      */
     private int parseIndex(String details) throws AegisException {
         if (details.trim().isEmpty()) {
