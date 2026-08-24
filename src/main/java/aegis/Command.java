@@ -12,15 +12,17 @@ public class Command {
     private final String commandName;
     private final Task task;
     private final int index;
+    private final String detail;
 
     /**
      * Constructs a Command object identified by its action string,
-     * optional task, and task index.
+     * optional task, task index, and optional command.
      */
-    public Command(String commandName, Task task, int index) {
+    public Command(String commandName, Task task, int index, String detail) {
         this.commandName = commandName;
         this.task = task;
         this.index = index;
+        this.detail = detail;
     }
 
     /**
@@ -78,6 +80,9 @@ public class Command {
                 break;
             case "bye":
                 ui.showEndMessage();
+                break;
+            case "find":
+                ui.showFindMessage(tasks, detail);
                 break;
             default:
                 ui.showDefaultMessage();
