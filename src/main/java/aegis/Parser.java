@@ -27,28 +27,19 @@ public class Parser {
         String action = parts[0];
         String details = parts.length > 1 ? parts[1] : "";
 
-        switch (action) {
-            case "bye":
-                return new Command("bye", null, 0);
-            case "list":
-                return new Command("list", null, 0);
-            case "todo":
-                return new Command("todo", createTodoTask(details), 0);
-            case "deadline":
-                return new Command("deadline", createDeadlineTask(details), 0);
-            case "event":
-                return new Command("event", createEventTask(details), 0);
-            case "delete":
-                return new Command("delete", null, parseIndex(details));
-            case "mark":
-                return new Command("mark", null, parseIndex(details));
-            case "unmark":
-                return new Command("unmark", null, parseIndex(details));
-            default:
-                throw new AegisException("Sorry, I have no idea what it means!");
-        }
+        return switch (action) {
+            case "bye" -> new Command("bye", null, 0, null);
+            case "list" -> new Command("list", null, 0, null);
+            case "todo" -> new Command("todo", createTodoTask(details), 0, null);
+            case "deadline" -> new Command("deadline", createDeadlineTask(details), 0, null);
+            case "event" -> new Command("event", createEventTask(details), 0, null);
+            case "delete" -> new Command("delete", null, parseIndex(details), null);
+            case "mark" -> new Command("mark", null, parseIndex(details), null);
+            case "unmark" -> new Command("unmark", null, parseIndex(details), null);
+            case "find" -> new Command("find", null, 0, details);
+            default -> throw new AegisException("Sorry, I have no idea what it means!");
+        };
     }
-
 
     /**
      * Parses the index provided by the user, for marking and unmarking of tasks.
@@ -72,7 +63,7 @@ public class Parser {
      * Creates a ToDo task from the given details.
      * The details must contain a non-empty description.
      *
-     * @param details The description of the todo task, as provided by the user.
+     * @param details The description of the ToDo task, as provided by the user.
      * @return A new ToDo task with the given description.
      * @throws AegisException If the description is empty or blank.
      */
@@ -151,8 +142,5 @@ public class Parser {
             throw new AegisException("Dates must be in YYYY-MM-DD format.");
         }
     }
-
-
-
 
 }

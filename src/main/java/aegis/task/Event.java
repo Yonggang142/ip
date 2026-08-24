@@ -31,7 +31,6 @@ public class Event extends Task {
         return "E";
     }
 
-
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
@@ -39,7 +38,6 @@ public class Event extends Task {
                 + " (from: " + start.format(formatter)
                 + " to: " + end.format(formatter) + ")";
     }
-
 
     @Override
     public String getFileSaveFormat() {

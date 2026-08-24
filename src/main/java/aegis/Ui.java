@@ -2,6 +2,8 @@ package aegis;
 
 import aegis.task.Task;
 
+import java.util.ArrayList;
+
 /**
  * Handles the user interface for the Aegis application.
  * Provides methods to display messages, task lists and errors.
@@ -53,7 +55,7 @@ public class Ui {
     }
 
     /**
-     * Displays the ending message after user says "bye"
+     * Displays the ending message after user says "bye".
      */
     public void showEndMessage() {
         System.out.println(LINE);
@@ -94,7 +96,7 @@ public class Ui {
     }
 
     /**
-     * Displays a confirmation that a task has been deleted
+     * Displays a confirmation that a task has been deleted.
      */
     public void showDeletedTask(Task task, int size) {
         System.out.println(LINE);
@@ -105,7 +107,7 @@ public class Ui {
     }
 
     /**
-     * Displays a confirmation that a task has been marked or unmarked
+     * Displays a confirmation that a task has been marked or unmarked.
      */
     public void showTaskStatus(Task task, boolean isDone) {
         System.out.println(LINE);
@@ -115,6 +117,21 @@ public class Ui {
             System.out.println("OK, I've marked this task as not done yet:");
         }
         System.out.println(task);
+        System.out.println(LINE);
+    }
+
+    /**
+     * Displays all the matching tasks given a matching keyword.
+     */
+    public void showFindMessage(TaskList tasks, String tag) {
+        System.out.println(LINE);
+        System.out.println("Here are the matching tasks from the list: ");
+
+        ArrayList<Task> matchingTasks = tasks.getMatchingTasks(tag);
+        for (Task matchingTask : matchingTasks) {
+            System.out.println(matchingTask);
+        }
+
         System.out.println(LINE);
     }
 

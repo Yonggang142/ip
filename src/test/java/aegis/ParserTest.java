@@ -16,7 +16,7 @@ public class ParserTest {
         assertEquals("todo", command.getCommandName());
         Task task = command.getTask();
         assertInstanceOf(ToDo.class, task);
-        assertEquals("borrow book", task.toString());
+        assertEquals("borrow book", task.getDescription());
     }
 
     @Test

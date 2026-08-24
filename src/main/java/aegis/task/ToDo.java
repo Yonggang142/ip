@@ -20,7 +20,6 @@ public class ToDo extends Task {
         return "T";
     }
 
-
     @Override
     public String getFileSaveFormat() {
         return "T | " + (isDone ? "1" : "0") + " | " + description;

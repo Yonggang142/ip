@@ -55,10 +55,13 @@ public abstract class Task {
         return "[" + getTypeIcon() + "][" + getStatusIcon() + "] " + description;
     }
 
-
     /**
      * Returns the file storage format of this task.
      */
     public abstract String getFileSaveFormat();
+
+    public String getDescription() {
+        return description;
+    }
 
 }

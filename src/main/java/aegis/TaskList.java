@@ -9,7 +9,6 @@ import java.util.ArrayList;
  * Wraps an internal ArrayList and provides operations for adding,
  * retrieving, deleting, marking and unmarking tasks.
  */
-
 public class TaskList {
 
     private final ArrayList<Task> tasks;
@@ -68,5 +67,21 @@ public class TaskList {
      */
     public void unmark(int index) {
         tasks.get(index).unmark();
+    }
+
+    /**
+     * Returns all tasks whose description contains the given keyword.
+     *
+     * @param tag The search word (or phrase) to match against task descriptions.
+     * @return An ArrayList of matching tasks.
+     */
+    public ArrayList<Task> getMatchingTasks(String tag) {
+        ArrayList<Task> matches = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.toString().contains(tag)) {
+                matches.add(task);
+            }
+        }
+        return matches;
     }
 }
