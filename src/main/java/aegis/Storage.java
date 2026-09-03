@@ -104,6 +104,7 @@ public class Storage {
             textToAdd.append(taskList.get(i).getFileSaveFormat())
                     .append(System.lineSeparator());
         }
+
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd.toString());
         fw.close();
