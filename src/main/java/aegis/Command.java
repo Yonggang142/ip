@@ -39,55 +39,47 @@ public class Command {
      * @param ui UI class.
      * @param storage Storage class.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
-        switch (commandName) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
+        return switch (commandName) {
             case "todo":
             case "deadline":
             case "event":
                 tasks.add(task);
-                ui.showTaskAdded(task, tasks.size());
                 storage.saveToFile(tasks);
-                break;
+                yield ui.getTaskAddedMessage(task, tasks.size());
             case "delete":
                 if (index < 0 || index >= tasks.size()) {
                     throw new AegisException("Sorry, that task number does not exist.");
                 }
                 Task deleted = tasks.get(index);
                 tasks.delete(index);
-                ui.showDeletedTask(deleted, tasks.size());
                 storage.saveToFile(tasks);
-                break;
+                yield ui.getDeletedTaskMessage(deleted, tasks.size());
             case "mark":
                 if (index < 0 || index >= tasks.size()) {
                     throw new AegisException("Sorry, that task number does not exist.");
                 }
                 Task markTask = tasks.get(index);
                 tasks.mark(index);
-                ui.showTaskStatus(markTask, true);
                 storage.saveToFile(tasks);
-                break;
+                yield ui.getTaskStatusMessage(markTask, true);
             case "unmark":
                 if (index < 0 || index >= tasks.size()) {
                     throw new AegisException("Sorry, that task number does not exist.");
                 }
                 Task unmarkTask = tasks.get(index);
                 tasks.unmark(index);
-                ui.showTaskStatus(unmarkTask, false);
                 storage.saveToFile(tasks);
-                break;
+                yield ui.getTaskStatusMessage(unmarkTask, false);
             case "list":
-                ui.showTaskList(tasks);
-                break;
+                yield ui.getTaskListMessage(tasks);
             case "bye":
-                ui.showEndMessage();
-                break;
+                yield ui.getEndMessage();
             case "find":
-                ui.showFindMessage(tasks, detail);
-                break;
+                yield ui.getFindMessage(tasks, detail);
             default:
-                ui.showDefaultMessage();
-                break;
-        }
+                yield ui.getDefaultMessage();
+        };
     }
 
     public String getCommandName() {

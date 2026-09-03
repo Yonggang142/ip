@@ -15,7 +15,7 @@ public class Ui {
             What can I do for you today?
             """;
 
-    private static final String LINE = "_____________________________________________________________";
+    private static final String LINE = "____________________________________________________________";
 
     private static final String END_MESSAGE = "Bye. See you soon!";
 
@@ -29,110 +29,107 @@ public class Ui {
             """;
 
     /**
-     * Displays the error message.
+     * Returns the error message.
      */
-    public void showError(String message) {
-        System.out.println(LINE);
-        System.out.println(message);
-        System.out.println(LINE);
+    public String getErrorMessage(String message) {
+        return LINE + "\n" + message + "\n" + LINE;
     }
 
     /**
-     * Displays the starting message.
+     * Returns the starting message.
      */
-    public void showStartMessage() {
-        System.out.println(LINE);
-        System.out.println(BANNER);
-        System.out.println(START_MESSAGE);
-        System.out.println(LINE);
+    public String getStartMessage() {
+        return LINE + "\n" + BANNER + "\n" + START_MESSAGE + "\n" + LINE;
     }
 
     /**
-     * Displays a loading error message.
+     * Returns a loading error message.
      */
-    public void showLoadingError() {
-        System.out.println("Error with loading tasks from storage");
+    public String getLoadingErrorMessage() {
+        return "Error with loading tasks from storage";
     }
 
     /**
-     * Displays the ending message after user says "bye".
+     * Returns the ending message after user says "bye".
      */
-    public void showEndMessage() {
-        System.out.println(LINE);
-        System.out.println(END_MESSAGE);
-        System.out.println(LINE);
+    public String getEndMessage() {
+        return LINE + "\n" + END_MESSAGE + "\n" + LINE;
     }
 
     /**
-     * Displays a message when the command is invalid.
+     * Returns a message when the command is invalid.
      */
-    public void showDefaultMessage() {
-        System.out.println(LINE);
-        System.out.println("Sorry, I have no idea what it means!");
-        System.out.println(LINE);
+    public String getDefaultMessage() {
+        return LINE + "\nSorry, I have no idea what it means!\n" + LINE;
     }
 
     /**
-     * Displays a message when a task is being added.
+     * Returns a message when a task is being added.
      */
-    public void showTaskAdded(Task task, int size) {
-        System.out.println(LINE);
-        System.out.println("OK, I've added a new task: ");
-        System.out.println(task);
-        System.out.println("Now you have " + size + " tasks in the list");
-        System.out.println(LINE);
+    public String getTaskAddedMessage(Task task, int size) {
+        return LINE + "\n"
+                + "OK, I've added a new task: \n"
+                + task + "\n"
+                + "Now you have " + size + " tasks in the list\n"
+                + LINE;
     }
 
     /**
-     * Displays the numbered list of all tasks.
+     * Returns the numbered list of all tasks.
      */
-    public void showTaskList(TaskList taskList) {
-        System.out.println(LINE);
-        System.out.println("Here are the tasks in the list:");
+    public String getTaskListMessage(TaskList taskList) {
+        StringBuilder message = new StringBuilder();
+        message.append(LINE).append("\n");
+        message.append("Here are the tasks in the list:").append("\n");
         for (int i = 0; i < taskList.size(); i++) {
-            System.out.println((i + 1) + "." + taskList.get(i));
+            message.append(i + 1).append(".").append(taskList.get(i)).append("\n");
         }
-        System.out.println(LINE);
+        message.append(LINE);
+        return message.toString();
     }
 
     /**
-     * Displays a confirmation that a task has been deleted.
+     * Returns a confirmation that a task has been deleted.
      */
-    public void showDeletedTask(Task task, int size) {
-        System.out.println(LINE);
-        System.out.println("I've deleted this task for you");
-        System.out.println(task);
-        System.out.println("Now you have " + size + " tasks in the list.");
-        System.out.println(LINE);
+    public String getDeletedTaskMessage(Task task, int size) {
+        return LINE + "\n"
+                + "I've deleted this task for you\n"
+                + task + "\n"
+                + "Now you have " + size + " tasks in the list.\n"
+                + LINE;
     }
 
     /**
-     * Displays a confirmation that a task has been marked or unmarked.
+     * Returns a confirmation that a task has been marked or unmarked.
      */
-    public void showTaskStatus(Task task, boolean isDone) {
-        System.out.println(LINE);
+    public String getTaskStatusMessage(Task task, boolean isDone) {
+        StringBuilder message = new StringBuilder();
+        message.append(LINE).append("\n");
         if (isDone) {
-            System.out.println("Nice! I've marked this task as done:");
+            message.append("Nice! I've marked this task as done:").append("\n");
         } else {
-            System.out.println("OK, I've marked this task as not done yet:");
+            message.append("OK, I've marked this task as not done yet:").append("\n");
         }
-        System.out.println(task);
-        System.out.println(LINE);
+        message.append(task).append("\n");
+        message.append(LINE);
+        return message.toString();
     }
 
     /**
-     * Displays all the matching tasks given a matching keyword.
+     * Returns all the matching tasks given a matching keyword.
      */
-    public void showFindMessage(TaskList tasks, String tag) {
-        System.out.println(LINE);
-        System.out.println("Here are the matching tasks from the list: ");
+    public String getFindMessage(TaskList tasks, String tag) {
+        StringBuilder message = new StringBuilder();
+        message.append(LINE).append("\n");
+        message.append("Here are the matching tasks from the list: ").append("\n");
 
         ArrayList<Task> matchingTasks = tasks.getMatchingTasks(tag);
         for (Task matchingTask : matchingTasks) {
-            System.out.println(matchingTask);
+            message.append(matchingTask).append("\n");
         }
 
-        System.out.println(LINE);
+        message.append(LINE);
+        return message.toString();
     }
 
 

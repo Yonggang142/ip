@@ -20,5 +20,5 @@ _temp/
 text-ui-test/EXPECTED-UNIX.TXT
 
 # Runtime data
-/data/Aegis.txt
+/data/aegis.txt
 /JarFolder/

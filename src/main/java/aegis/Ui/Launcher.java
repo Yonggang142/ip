@@ -1,3 +1,5 @@
+package aegis.ui;
+
 import javafx.application.Application;
 
 /**
