@@ -1,8 +1,8 @@
 package aegis;
 
-import aegis.task.Task;
-
 import java.io.IOException;
+
+import aegis.task.Task;
 
 /**
  * Performs the chatbot tasks depending on the command type.

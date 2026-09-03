@@ -1,8 +1,8 @@
 package aegis;
 
-import aegis.task.Task;
-
 import java.util.ArrayList;
+
+import aegis.task.Task;
 
 /**
  * Represents a list of tasks.

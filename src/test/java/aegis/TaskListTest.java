@@ -1,10 +1,10 @@
 package aegis;
 
-import org.junit.jupiter.api.Test;
-import aegis.task.Task;
-import aegis.task.ToDo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import aegis.task.ToDo;
 
 public class TaskListTest {
 

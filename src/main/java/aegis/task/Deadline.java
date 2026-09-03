@@ -20,7 +20,6 @@ public class Deadline extends Task {
     public Deadline(String description, LocalDate end, boolean isDone) {
         super(description, isDone);
         this.end = end;
-
     }
 
     @Override
