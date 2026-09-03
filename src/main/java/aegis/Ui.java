@@ -15,8 +15,6 @@ public class Ui {
             What can I do for you today?
             """;
 
-    private static final String LINE = "____________________________________________________________";
-
     private static final String END_MESSAGE = "Bye. See you soon!";
 
     private static final String BANNER = """
@@ -32,14 +30,14 @@ public class Ui {
      * Returns the error message.
      */
     public String getErrorMessage(String message) {
-        return LINE + "\n" + message + "\n" + LINE;
+        return message;
     }
 
     /**
      * Returns the starting message.
      */
     public String getStartMessage() {
-        return LINE + "\n" + BANNER + "\n" + START_MESSAGE + "\n" + LINE;
+        return BANNER + "\n" + START_MESSAGE;
     }
 
     /**
@@ -53,25 +51,23 @@ public class Ui {
      * Returns the ending message after user says "bye".
      */
     public String getEndMessage() {
-        return LINE + "\n" + END_MESSAGE + "\n" + LINE;
+        return END_MESSAGE;
     }
 
     /**
      * Returns a message when the command is invalid.
      */
     public String getDefaultMessage() {
-        return LINE + "\nSorry, I have no idea what it means!\n" + LINE;
+        return "Sorry, I have no idea what it means!";
     }
 
     /**
      * Returns a message when a task is being added.
      */
     public String getTaskAddedMessage(Task task, int size) {
-        return LINE + "\n"
-                + "OK, I've added a new task: \n"
+        return "OK, I've added a new task: \n"
                 + task + "\n"
-                + "Now you have " + size + " tasks in the list\n"
-                + LINE;
+                + "Now you have " + size + " tasks in the list";
     }
 
     /**
@@ -79,12 +75,13 @@ public class Ui {
      */
     public String getTaskListMessage(TaskList taskList) {
         StringBuilder message = new StringBuilder();
-        message.append(LINE).append("\n");
         message.append("Here are the tasks in the list:").append("\n");
         for (int i = 0; i < taskList.size(); i++) {
             message.append(i + 1).append(".").append(taskList.get(i)).append("\n");
         }
-        message.append(LINE);
+        if (message.charAt(message.length() - 1) == '\n') {
+            message.deleteCharAt(message.length() - 1);
+        }
         return message.toString();
     }
 
@@ -92,11 +89,9 @@ public class Ui {
      * Returns a confirmation that a task has been deleted.
      */
     public String getDeletedTaskMessage(Task task, int size) {
-        return LINE + "\n"
-                + "I've deleted this task for you\n"
+        return "I've deleted this task for you\n"
                 + task + "\n"
-                + "Now you have " + size + " tasks in the list.\n"
-                + LINE;
+                + "Now you have " + size + " tasks in the list.";
     }
 
     /**
@@ -104,14 +99,12 @@ public class Ui {
      */
     public String getTaskStatusMessage(Task task, boolean isDone) {
         StringBuilder message = new StringBuilder();
-        message.append(LINE).append("\n");
         if (isDone) {
             message.append("Nice! I've marked this task as done:").append("\n");
         } else {
             message.append("OK, I've marked this task as not done yet:").append("\n");
         }
-        message.append(task).append("\n");
-        message.append(LINE);
+        message.append(task);
         return message.toString();
     }
 
@@ -120,7 +113,6 @@ public class Ui {
      */
     public String getFindMessage(TaskList tasks, String tag) {
         StringBuilder message = new StringBuilder();
-        message.append(LINE).append("\n");
         message.append("Here are the matching tasks from the list: ").append("\n");
 
         ArrayList<Task> matchingTasks = tasks.getMatchingTasks(tag);
@@ -128,7 +120,9 @@ public class Ui {
             message.append(matchingTask).append("\n");
         }
 
-        message.append(LINE);
+        if (message.charAt(message.length() - 1) == '\n') {
+            message.deleteCharAt(message.length() - 1);
+        }
         return message.toString();
     }
 
