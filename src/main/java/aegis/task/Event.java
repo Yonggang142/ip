@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
 
     protected LocalDate start;
-
     protected LocalDate end;
 
     /**

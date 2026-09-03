@@ -1,12 +1,16 @@
 package aegis;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
+
 import aegis.task.Deadline;
 import aegis.task.Event;
 import aegis.task.Task;
 import aegis.task.ToDo;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
 
@@ -21,7 +25,8 @@ public class ParserTest {
 
     @Test
     public void parseTodo_emptyDescription_throwsAegisException() {
-        AegisException e = assertThrows(AegisException.class, () -> new Parser().parse("todo   "));
+        AegisException e = assertThrows(AegisException.class, () ->
+                new Parser().parse("todo   "));
         assertEquals("The description of a todo cannot be empty.", e.getMessage());
     }
 
@@ -35,8 +40,8 @@ public class ParserTest {
 
     @Test
     public void parseDeadline_invalidDate_throwsAegisException() {
-        AegisException e = assertThrows(AegisException.class,
-                () -> new Parser().parse("deadline return book /by 22-08-2026"));
+        AegisException e = assertThrows(AegisException.class, () ->
+                new Parser().parse("deadline return book /by 22-08-2026"));
         assertEquals("Dates must be in YYYY-MM-DD format.", e.getMessage());
     }
 
@@ -50,8 +55,8 @@ public class ParserTest {
 
     @Test
     public void parseEvent_invalidDate_throwsAegisException() {
-        AegisException e = assertThrows(AegisException.class,
-                () -> new Parser().parse("event meeting /from 22-08-2026 /to 23-08-2026"));
+        AegisException e = assertThrows(AegisException.class, () ->
+                new Parser().parse("event meeting /from 22-08-2026 /to 23-08-2026"));
         assertEquals("Dates must be in YYYY-MM-DD format.", e.getMessage());
     }
 

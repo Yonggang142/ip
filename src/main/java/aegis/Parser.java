@@ -1,13 +1,12 @@
 package aegis;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import aegis.task.Deadline;
 import aegis.task.Event;
 import aegis.task.Task;
 import aegis.task.ToDo;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-
 
 /**
  * Creates a Command object depending on the user's command.

@@ -1,10 +1,5 @@
 package aegis;
 
-import aegis.task.Deadline;
-import aegis.task.Event;
-import aegis.task.Task;
-import aegis.task.ToDo;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,6 +8,11 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import aegis.task.Deadline;
+import aegis.task.Event;
+import aegis.task.Task;
+import aegis.task.ToDo;
 
 /**
  * Handles loading and saving tasks to a local storage file specified by the filePath.
@@ -104,6 +104,7 @@ public class Storage {
             textToAdd.append(taskList.get(i).getFileSaveFormat())
                     .append(System.lineSeparator());
         }
+
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd.toString());
         fw.close();

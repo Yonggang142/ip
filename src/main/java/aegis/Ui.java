@@ -1,8 +1,8 @@
 package aegis;
 
-import aegis.task.Task;
-
 import java.util.ArrayList;
+
+import aegis.task.Task;
 
 /**
  * Handles the user interface for the Aegis application.
