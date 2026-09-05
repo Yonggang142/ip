@@ -25,6 +25,8 @@ public class Storage {
      * Creates a Storage object that reads and writes to the given file path.
      */
     public Storage(String filePath) {
+        assert filePath != null : "Storage file path should not be null";
+        assert !filePath.isBlank() : "Storage file path should not be blank";
         this.filePath = filePath;
     }
 
@@ -39,6 +41,7 @@ public class Storage {
      */
     public ArrayList<Task> load() throws AegisException, IOException {
         Path path = Paths.get(filePath);
+        assert path != null : "Storage path should be created from the configured file path";
 
         ArrayList<Task> taskList = new ArrayList<>();
         if (!Files.exists(path)) {
@@ -61,6 +64,7 @@ public class Storage {
                 throw new AegisException("Incorrect task status in file");
             }
             boolean isDone = status.equals("1");
+            assert status.equals("0") || isDone : "Task status should map to a valid done flag";
             switch (identifier) {
                 case "T": {
                     if (parts.length != 3) {

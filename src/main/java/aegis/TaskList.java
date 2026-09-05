@@ -25,6 +25,7 @@ public class TaskList {
      * Creates a TaskList using the given list of tasks.
      */
     public TaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "TaskList cannot wrap a null backing list";
         this.tasks = tasks;
     }
 
@@ -32,6 +33,7 @@ public class TaskList {
      * Adds a task to the list.
      */
     public void add(Task task) {
+        assert task != null : "TaskList should not contain null tasks";
         tasks.add(task);
     }
 
