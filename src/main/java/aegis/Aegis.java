@@ -49,13 +49,13 @@ public class Aegis {
     public void run() {
         System.out.println(ui.getStartMessage());
         Scanner scanner = new Scanner(System.in);
-        boolean isEnd = false;
+        boolean hasEnded = false;
 
-        while (!isEnd) {
+        while (!hasEnded) {
             try {
                 Command command = parser.parse(scanner.nextLine());
                 System.out.println(command.execute(tasks, ui, storage));
-                isEnd = command.hasEnded();
+                hasEnded = command.hasEnded();
             } catch (AegisException e) {
                 System.out.println(ui.getErrorMessage(e.getMessage()));
             } catch (IOException e) {
