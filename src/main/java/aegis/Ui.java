@@ -64,10 +64,10 @@ public class Ui {
     /**
      * Returns a message when a task is being added.
      */
-    public String getTaskAddedMessage(Task task, int size) {
+    public String getTaskAddedMessage(Task task, int totalTasks) {
         return "OK, I've added a new task: \n"
                 + task + "\n"
-                + "Now you have " + size + " tasks in the list";
+                + "Now you have " + totalTasks + " tasks in the list";
     }
 
     /**
@@ -79,19 +79,16 @@ public class Ui {
         for (int i = 0; i < taskList.size(); i++) {
             message.append(i + 1).append(".").append(taskList.get(i)).append("\n");
         }
-        if (message.charAt(message.length() - 1) == '\n') {
-            message.deleteCharAt(message.length() - 1);
-        }
-        return message.toString();
+        return removeTrailingNewline(message);
     }
 
     /**
      * Returns a confirmation that a task has been deleted.
      */
-    public String getDeletedTaskMessage(Task task, int size) {
+    public String getDeletedTaskMessage(Task task, int totalTasks) {
         return "I've deleted this task for you\n"
                 + task + "\n"
-                + "Now you have " + size + " tasks in the list.";
+                + "Now you have " + totalTasks + " tasks in the list.";
     }
 
     /**
@@ -120,11 +117,18 @@ public class Ui {
             message.append(matchingTask).append("\n");
         }
 
-        if (message.charAt(message.length() - 1) == '\n') {
-            message.deleteCharAt(message.length() - 1);
-        }
-        return message.toString();
+        return removeTrailingNewline(message);
     }
 
+    /**
+     * Removes one trailing newline from a built message, if present.
+     */
+    private String removeTrailingNewline(StringBuilder message) {
+        if (message.charAt(message.length() - 1) != '\n') {
+            return message.toString();
+        }
+        message.deleteCharAt(message.length() - 1);
+        return message.toString();
+    }
 
 }

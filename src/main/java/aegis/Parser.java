@@ -14,15 +14,16 @@ import aegis.task.ToDo;
  */
 public class Parser {
 
+    private static final int PARTS_TO_SPLIT = 2;
     /**
      * Parses the user command and creates the corresponding Command object.
      *
-     * @param command The full user input string.
+     * @param userInput The full user input string.
      * @return The Command object representing the parsed action.
      * @throws AegisException If the command is unrecognized.
      */
-    public Command parse(String command) throws AegisException {
-        String[] parts = command.split(" ", 2);
+    public Command parse(String userInput) throws AegisException {
+        String[] parts = userInput.split(" ", PARTS_TO_SPLIT);
         String action = parts[0];
         String details = parts.length > 1 ? parts[1] : "";
 
@@ -87,7 +88,7 @@ public class Parser {
         if (!details.contains(" /by ")) {
             throw new AegisException("Please include /by for deadlines.");
         }
-        String[] deadlineParts = details.split(" /by ", 2);
+        String[] deadlineParts = details.split(" /by ", PARTS_TO_SPLIT);
         String description = deadlineParts[0];
         String by = deadlineParts[1];
         if (description.trim().isEmpty()) {
@@ -118,11 +119,11 @@ public class Parser {
         if (!details.contains(" /from ")) {
             throw new AegisException("Please include /from for events.");
         }
-        String[] eventParts = details.split(" /from ", 2);
-        String[] timeParts = eventParts[1].split(" /to ", 2);
-        if (timeParts.length < 2) {
+        if (!details.contains(" /to ")) {
             throw new AegisException("Please include /to for events.");
         }
+        String[] eventParts = details.split(" /from ", PARTS_TO_SPLIT);
+        String[] timeParts = eventParts[1].split(" /to ", PARTS_TO_SPLIT);
         String description = eventParts[0];
         String from = timeParts[0];
         String to = timeParts[1];
