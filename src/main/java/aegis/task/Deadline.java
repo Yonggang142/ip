@@ -24,6 +24,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public LocalDate getDate() {
+        return end;
+    }
+
+    @Override
     public String getTypeIcon() {
         return "D";
     }

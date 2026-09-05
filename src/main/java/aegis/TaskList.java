@@ -2,6 +2,7 @@ package aegis;
 
 import java.util.stream.Collectors;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import aegis.task.Task;
 
@@ -73,6 +74,13 @@ public class TaskList {
     }
 
     /**
+     * Sorts the taskList by date.
+     */
+    public void sortByDate() {
+        tasks.sort(Comparator.comparing(Task::getDate));
+    }
+
+    /**
      * Returns all tasks whose description contains the given keyword.
      *
      * @param tag The search word (or phrase) to match against task descriptions.
@@ -83,4 +91,5 @@ public class TaskList {
                 .filter(task -> task.toString().contains(tag))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
 }

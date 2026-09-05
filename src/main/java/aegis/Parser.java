@@ -42,6 +42,7 @@ public class Parser {
             case "mark" -> new Command("mark", null, parseIndex(details), null);
             case "unmark" -> new Command("unmark", null, parseIndex(details), null);
             case "find" -> new Command("find", null, 0, details);
+            case "sort" -> new Command("sort", null, 0, null);
             default -> throw new AegisException("Sorry, I have no idea what it means!");
         };
     }

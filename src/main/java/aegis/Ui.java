@@ -1,5 +1,6 @@
 package aegis;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import aegis.task.Task;
@@ -73,11 +74,12 @@ public class Ui {
     /**
      * Returns the numbered list of all tasks.
      */
-    public String getTaskListMessage(TaskList taskList) {
+    public String getTaskListMessage(TaskList tasks) {
         StringBuilder message = new StringBuilder();
         message.append("Here are the tasks in the list:").append("\n");
-        for (int i = 0; i < taskList.size(); i++) {
-            message.append(i + 1).append(".").append(taskList.get(i)).append("\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            message.append(i + 1).append(".").append(task).append("\n");
         }
         return removeTrailingNewline(message);
     }
@@ -129,6 +131,15 @@ public class Ui {
         }
         message.deleteCharAt(message.length() - 1);
         return message.toString();
+    }
+
+    /**
+     * Sorts the TaskList, stores the sorted list in files, and returns the sorted list message.
+     */
+    public String getSortedListMessage(TaskList tasks, Storage storage) throws IOException {
+        tasks.sortByDate();
+        storage.saveToFile(tasks);
+        return "I have sorted your tasks by date, here are your tasks: \n" + getTaskListMessage(tasks);
     }
 
 }
