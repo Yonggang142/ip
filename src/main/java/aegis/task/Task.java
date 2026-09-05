@@ -1,5 +1,7 @@
 package aegis.task;
 
+import java.time.LocalDate;
+
 /**
  * Represents a task in the Aegis task list.
  */
@@ -19,6 +21,13 @@ public abstract class Task {
         assert !description.isBlank() : "Task description should not be blank";
         this.description = description;
         this.isDone = isDone;
+    }
+
+    /**
+     * Returns the LocalDate of the task if present, otherwise MAX.
+     */
+    public LocalDate getDate() {
+        return LocalDate.MAX;
     }
 
     /**

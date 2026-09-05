@@ -87,6 +87,7 @@ public class Command {
         return ui.getTaskStatusMessage(taskToUnmark, false);
     }
 
+
     /**
      * Executes the task based on the corresponding command.
      *
@@ -106,6 +107,7 @@ public class Command {
             case "list" -> ui.getTaskListMessage(tasks);
             case "bye" -> ui.getEndMessage();
             case "find" -> ui.getFindMessage(tasks, keyword);
+            case "sort" -> ui.getSortedListMessage(tasks, storage);
             default -> ui.getDefaultMessage();
 
         };

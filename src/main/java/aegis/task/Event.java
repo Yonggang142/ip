@@ -27,6 +27,12 @@ public class Event extends Task {
         this.end = end;
     }
 
+
+    @Override
+    public LocalDate getDate() {
+        return start;
+    }
+
     @Override
     public String getTypeIcon() {
         return "E";
