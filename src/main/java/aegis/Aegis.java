@@ -20,6 +20,9 @@ public class Aegis {
         ui = new Ui();
         storage = new Storage(filePath);
         parser = new Parser();
+        assert ui != null : "Ui must be initialized before handling user interactions";
+        assert storage != null : "Storage must be initialized before loading tasks";
+        assert parser != null : "Parser must be initialized before processing commands";
         try {
             tasks = new TaskList(storage.load());
         } catch (AegisException e) {
@@ -29,6 +32,7 @@ public class Aegis {
             System.out.println(ui.getErrorMessage(e.getMessage()));
             tasks = new TaskList();
         }
+        assert tasks != null : "TaskList must always be available after Aegis construction";
     }
 
     /**
@@ -64,6 +68,7 @@ public class Aegis {
      * Processes one user input and returns the chatbot response for the GUI.
      */
     public String getResponse(String input) {
+        assert input != null : "GUI input should not be null";
         try {
             Command command = parser.parse(input);
             return command.execute(tasks, ui, storage);
