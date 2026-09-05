@@ -1,5 +1,6 @@
 package aegis;
 
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 
 import aegis.task.Task;
@@ -78,12 +79,8 @@ public class TaskList {
      * @return An ArrayList of matching tasks.
      */
     public ArrayList<Task> getMatchingTasks(String tag) {
-        ArrayList<Task> matches = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task.toString().contains(tag)) {
-                matches.add(task);
-            }
-        }
-        return matches;
+        return tasks.stream()
+                .filter(task -> task.toString().contains(tag))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
