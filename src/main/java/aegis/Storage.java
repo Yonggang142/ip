@@ -21,6 +21,13 @@ public class Storage {
 
     private final String filePath;
 
+    private static final int TODO_FIELD_COUNT = 3;
+    private static final int DEADLINE_FIELD_COUNT = 4;
+    private static final int EVENT_FIELD_COUNT = 5;
+
+    private static final String STATUS_NOT_DONE = "0";
+    private static final String STATUS_DONE = "1";
+
     /**
      * Creates a Storage object that reads and writes to the given file path.
      */
@@ -28,6 +35,72 @@ public class Storage {
         assert filePath != null : "Storage file path should not be null";
         assert !filePath.isBlank() : "Storage file path should not be blank";
         this.filePath = filePath;
+    }
+
+    /**
+     * Creates the storage file and parent directories if they do not exist.
+     */
+    public void ensureFileExists(Path path) throws IOException {
+        if (Files.exists(path)) {
+            return;
+        }
+
+        if (path.getParent() != null) {
+            Files.createDirectories(path.getParent());
+        }
+        Files.createFile(path);
+    }
+
+    /**
+     * Checks whether a saved task status value is invalid.
+     */
+    private boolean isInvalidStatus(String status) {
+        return !status.equals(STATUS_NOT_DONE) && !status.equals(STATUS_DONE);
+    }
+
+    /**
+     * Parses the task line and initializes the loadedTasks list used to create a TaskList.
+     */
+    public void parseTaskLine(String currLine, ArrayList<Task> loadedTasks) throws AegisException {
+        String[] parts = currLine.split(" \\| ");
+
+        if (parts.length < 2) {
+            throw new AegisException("Incorrect format in file");
+        }
+
+        String identifier = parts[0];
+        String status = parts[1];
+        if (isInvalidStatus(status)) {
+            throw new AegisException("Incorrect task status in file");
+        }
+
+        boolean isDone = status.equals(STATUS_DONE);
+        switch (identifier) {
+            case "T": {
+                if (parts.length != TODO_FIELD_COUNT) {
+                    throw new AegisException("Incorrect todo format in file");
+                }
+                loadedTasks.add(new ToDo(parts[2], isDone));
+                break;
+            }
+            case "D": {
+                if (parts.length != DEADLINE_FIELD_COUNT) {
+                    throw new AegisException("Incorrect deadline format in file");
+                }
+                loadedTasks.add(new Deadline(parts[2], LocalDate.parse(parts[3]), isDone));
+                break;
+            }
+            case "E": {
+                if (parts.length != EVENT_FIELD_COUNT) {
+                    throw new AegisException("Incorrect event format in file");
+                }
+                loadedTasks.add(new Event(parts[2],
+                        LocalDate.parse(parts[3]), LocalDate.parse(parts[4]), isDone));
+                break;
+            }
+            default:
+                throw new AegisException("Unknown information in file");
+        }
     }
 
     /**
@@ -43,56 +116,17 @@ public class Storage {
         Path path = Paths.get(filePath);
         assert path != null : "Storage path should be created from the configured file path";
 
-        ArrayList<Task> taskList = new ArrayList<>();
-        if (!Files.exists(path)) {
-            if (path.getParent() != null) {
-                Files.createDirectories(path.getParent());
-            }
-            Files.createFile(path);
-        }
+        ensureFileExists(path);
 
+        ArrayList<Task> loadedTasks = new ArrayList<>();
         Scanner s = new Scanner(path);
         while (s.hasNext()) {
             String currLine = s.nextLine();
-            String[] parts = currLine.split(" \\| ");
-            if (parts.length < 2) {
-                throw new AegisException("Incorrect format in file");
-            }
-            String identifier = parts[0];
-            String status = parts[1];
-            if (!status.equals("0") && !status.equals("1")) {
-                throw new AegisException("Incorrect task status in file");
-            }
-            boolean isDone = status.equals("1");
-            assert status.equals("0") || isDone : "Task status should map to a valid done flag";
-            switch (identifier) {
-                case "T": {
-                    if (parts.length != 3) {
-                        throw new AegisException("Incorrect todo format in file");
-                    }
-                    taskList.add(new ToDo(parts[2], isDone));
-                    break;
-                }
-                case "D": {
-                    if (parts.length != 4) {
-                        throw new AegisException("Incorrect deadline format in file");
-                    }
-                    taskList.add(new Deadline(parts[2], LocalDate.parse(parts[3]), isDone));
-                    break;
-                }
-                case "E": {
-                    if (parts.length != 5) {
-                        throw new AegisException("Incorrect event format in file");
-                    }
-                    taskList.add(new Event(parts[2],
-                            LocalDate.parse(parts[3]), LocalDate.parse(parts[4]), isDone));
-                    break;
-                }
-                default:
-                    throw new AegisException("Unknown information in file");
-            }
+
+            parseTaskLine(currLine, loadedTasks);
+
         }
-        return taskList;
+        return loadedTasks;
     }
 
     /**
