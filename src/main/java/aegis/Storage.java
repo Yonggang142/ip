@@ -32,6 +32,8 @@ public class Storage {
      * Creates a Storage object that reads and writes to the given file path.
      */
     public Storage(String filePath) {
+        assert filePath != null : "Storage file path should not be null";
+        assert !filePath.isBlank() : "Storage file path should not be blank";
         this.filePath = filePath;
     }
 
@@ -112,13 +114,17 @@ public class Storage {
      */
     public ArrayList<Task> load() throws AegisException, IOException {
         Path path = Paths.get(filePath);
+        assert path != null : "Storage path should be created from the configured file path";
+
         ensureFileExists(path);
 
         ArrayList<Task> loadedTasks = new ArrayList<>();
         Scanner s = new Scanner(path);
         while (s.hasNext()) {
             String currLine = s.nextLine();
+
             parseTaskLine(currLine, loadedTasks);
+
         }
         return loadedTasks;
     }

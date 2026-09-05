@@ -18,7 +18,11 @@ public class Command {
      * Constructs a Command object identified by its action string,
      * optional task, task index, and optional command.
      */
+
     public Command(String commandName, Task task, int index, String keyword) {
+
+        assert commandName != null : "Command name should be assigned by Parser";
+
         this.commandName = commandName;
         this.task = task;
         this.index = index;
@@ -91,6 +95,9 @@ public class Command {
      * @param storage Storage class.
      */
     public String execute(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
+        assert tasks != null : "Command execution requires a task list";
+        assert ui != null : "Command execution requires a UI message builder";
+        assert storage != null : "Command execution requires storage";
         return switch (commandName) {
             case "todo", "deadline", "event" -> executeAdd(tasks, ui, storage);
             case "delete" -> executeDelete(tasks, ui, storage);
@@ -100,6 +107,7 @@ public class Command {
             case "bye" -> ui.getEndMessage();
             case "find" -> ui.getFindMessage(tasks, keyword);
             default -> ui.getDefaultMessage();
+
         };
     }
 

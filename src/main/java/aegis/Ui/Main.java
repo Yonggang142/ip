@@ -2,13 +2,13 @@ package aegis.ui;
 
 import java.io.IOException;
 
-import aegis.Aegis;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import aegis.Aegis;
 
 /**
  * A GUI for Aegis using FXML.
