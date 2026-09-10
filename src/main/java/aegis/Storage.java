@@ -19,14 +19,14 @@ import aegis.task.ToDo;
  */
 public class Storage {
 
-    private final String filePath;
-
     private static final int TODO_FIELD_COUNT = 3;
     private static final int DEADLINE_FIELD_COUNT = 4;
     private static final int EVENT_FIELD_COUNT = 5;
 
     private static final String STATUS_NOT_DONE = "0";
     private static final String STATUS_DONE = "1";
+
+    private final String filePath;
 
     /**
      * Creates a Storage object that reads and writes to the given file path.
