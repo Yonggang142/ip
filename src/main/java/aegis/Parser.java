@@ -34,7 +34,7 @@ public class Parser {
         assert userInput != null : "User command should not be null";
         String normalizedInput = userInput.trim().replaceAll("\\s+", " ");
         if (normalizedInput.isEmpty()) {
-            throw new AegisException("Hmm, that command flew over my helmet. Try another one?");
+            throw new AegisException("Hmm, that command doesn't ring a bell. Try another one?");
         }
 
         String[] parts = normalizedInput.split(" ", PARTS_TO_SPLIT);
@@ -63,7 +63,7 @@ public class Parser {
                 ensureNoDetails(action, details);
                 yield new Command("sort", null, 0, null);
             }
-            default -> throw new AegisException("Hmm, that command flew over my helmet. Try another one?");
+            default -> throw new AegisException("Hmm, that command doesn't ring a bell. Try another one?");
         };
     }
 

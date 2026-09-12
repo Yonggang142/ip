@@ -15,7 +15,7 @@ public class TextUi {
 
     private static final String START_MESSAGE = """
             Hey there! Aegis is awake!
-            What quest are we tackling today?
+            What tasks are we tackling today?
             """;
 
     private static final String END_MESSAGE = "Bye for now! Your tasks are safe we me.";
@@ -61,7 +61,7 @@ public class TextUi {
     public String getTaskAddedMessage(Task task, int totalTasks) {
         return "Ta-da! I added this task:\n"
                 + task + "\n"
-                + "You now have " + totalTasks + " " + getTaskWord(totalTasks) + " in your quest log.";
+                + "You now have " + totalTasks + " " + getTaskWord(totalTasks) + " in your task log.";
     }
 
     /**
