@@ -3,6 +3,7 @@ package aegis;
 import java.io.IOException;
 
 import aegis.task.Task;
+import aegis.ui.TextUi;
 
 /**
  * Performs the chatbot tasks depending on the command type.
@@ -48,7 +49,7 @@ public class Command {
     /**
      * Adds this command's parsed task and saves the updated task list.
      */
-    private String executeAdd(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
+    private String executeAdd(TaskList tasks, TextUi ui, Storage storage) throws AegisException, IOException {
         if (tasks.containsSameDetails(task)) {
             throw new AegisException("This quest is already in your log. No clone army today.");
         }
@@ -60,7 +61,7 @@ public class Command {
     /**
      * Deletes this command's indexed task and saves the updated task list.
      */
-    private String executeDelete(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
+    private String executeDelete(TaskList tasks, TextUi ui, Storage storage) throws AegisException, IOException {
         checkIndexValidity(tasks);
         Task taskToDelete = tasks.get(index);
         tasks.delete(index);
@@ -71,7 +72,7 @@ public class Command {
     /**
      * Marks this command's indexed task as done and saves the updated task list.
      */
-    private String executeMark(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
+    private String executeMark(TaskList tasks, TextUi ui, Storage storage) throws AegisException, IOException {
         checkIndexValidity(tasks);
         Task taskToMark = tasks.get(index);
         tasks.mark(index);
@@ -82,7 +83,7 @@ public class Command {
     /**
      * Marks this command's indexed task as not done and saves the updated task list.
      */
-    private String executeUnmark(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
+    private String executeUnmark(TaskList tasks, TextUi ui, Storage storage) throws AegisException, IOException {
         checkIndexValidity(tasks);
         Task taskToUnmark = tasks.get(index);
         tasks.unmark(index);
@@ -95,10 +96,10 @@ public class Command {
      * Executes the task based on the corresponding command.
      *
      * @param tasks TaskList class for the current chat session.
-     * @param ui UI class.
+     * @param ui UI message builder.
      * @param storage Storage class.
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
+    public String execute(TaskList tasks, TextUi ui, Storage storage) throws AegisException, IOException {
         assert tasks != null : "Command execution requires a task list";
         assert ui != null : "Command execution requires a UI message builder";
         assert storage != null : "Command execution requires storage";

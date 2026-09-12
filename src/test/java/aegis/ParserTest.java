@@ -24,6 +24,13 @@ public class ParserTest {
     }
 
     @Test
+    public void parseTodo_mixedCaseCommand_returnsToDo() throws AegisException {
+        Command command = new Parser().parse("ToDo borrow book");
+        assertEquals("todo", command.getCommandName());
+        assertInstanceOf(ToDo.class, command.getTask());
+    }
+
+    @Test
     public void parseTodo_emptyDescription_throwsAegisException() {
         AegisException e = assertThrows(AegisException.class, () ->
                 new Parser().parse("todo   "));

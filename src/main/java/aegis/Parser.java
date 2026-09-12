@@ -40,7 +40,7 @@ public class Parser {
         String[] parts = normalizedInput.split(" ", PARTS_TO_SPLIT);
         assert parts.length >= 1 : "Splitting a command should always produce an action part";
 
-        String action = parts[0];
+        String action = parts[0].toLowerCase();
         String details = parts.length > 1 ? parts[1] : "";
 
         return switch (action) {

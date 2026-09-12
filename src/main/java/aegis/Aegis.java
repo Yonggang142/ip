@@ -3,6 +3,8 @@ package aegis;
 import java.io.IOException;
 import java.util.Scanner;
 
+import aegis.ui.TextUi;
+
 /**
  * Runs the Aegis chatbot, which manages tasks through command-line input.
  */
@@ -10,17 +12,17 @@ public class Aegis {
 
     private Storage storage;
     private TaskList tasks;
-    private Ui ui;
+    private TextUi ui;
     private Parser parser;
 
     /**
      * Constructs an Aegis chatbot with a file path specified to store chat logs.
      */
     public Aegis(String filePath) {
-        ui = new Ui();
+        ui = new TextUi();
         storage = new Storage(filePath);
         parser = new Parser();
-        assert ui != null : "Ui must be initialized before handling user interactions";
+        assert ui != null : "TextUi must be initialized before handling user interactions";
         assert storage != null : "Storage must be initialized before loading tasks";
         assert parser != null : "Parser must be initialized before processing commands";
         try {
