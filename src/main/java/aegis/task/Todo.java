@@ -1,17 +1,17 @@
 package aegis.task;
 
 /**
- * Represents a ToDo type task in the Aegis task list.
+ * Represents a Todo type task in the Aegis task list.
  */
-public class ToDo extends Task {
+public class Todo extends Task {
 
     /**
-     * Constructs a ToDo task.
+     * Constructs a Todo task.
      *
      * @param description Description of the task.
      * @param isDone Whether the task has been marked as done.
      */
-    public ToDo(String description, boolean isDone) {
+    public Todo(String description, boolean isDone) {
         super(description, isDone);
     }
 

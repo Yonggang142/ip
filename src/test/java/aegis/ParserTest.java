@@ -10,24 +10,24 @@ import org.junit.jupiter.api.Test;
 import aegis.task.Deadline;
 import aegis.task.Event;
 import aegis.task.Task;
-import aegis.task.ToDo;
+import aegis.task.Todo;
 
 public class ParserTest {
 
     @Test
-    public void parseTodo_validDescription_returnsToDo() throws AegisException {
+    public void parseTodo_validDescription_returnsTodo() throws AegisException {
         Command command = new Parser().parse("todo borrow book");
         assertEquals("todo", command.getCommandName());
         Task task = command.getTask();
-        assertInstanceOf(ToDo.class, task);
+        assertInstanceOf(Todo.class, task);
         assertEquals("borrow book", task.getDescription());
     }
 
     @Test
-    public void parseTodo_mixedCaseCommand_returnsToDo() throws AegisException {
-        Command command = new Parser().parse("ToDo borrow book");
+    public void parseTodo_mixedCaseCommand_returnsTodo() throws AegisException {
+        Command command = new Parser().parse("Todo borrow book");
         assertEquals("todo", command.getCommandName());
-        assertInstanceOf(ToDo.class, command.getTask());
+        assertInstanceOf(Todo.class, command.getTask());
     }
 
     @Test
@@ -38,10 +38,10 @@ public class ParserTest {
     }
 
     @Test
-    public void parseTodo_leadingAndMultipleSpaces_returnsTrimmedToDo() throws AegisException {
+    public void parseTodo_leadingAndMultipleSpaces_returnsTrimmedTodo() throws AegisException {
         Command command = new Parser().parse("   todo    borrow    book   ");
         Task task = command.getTask();
-        assertInstanceOf(ToDo.class, task);
+        assertInstanceOf(Todo.class, task);
         assertEquals("borrow book", task.getDescription());
     }
 

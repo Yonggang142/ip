@@ -13,7 +13,7 @@ import java.util.Scanner;
 import aegis.task.Deadline;
 import aegis.task.Event;
 import aegis.task.Task;
-import aegis.task.ToDo;
+import aegis.task.Todo;
 
 /**
  * Handles loading and saving tasks to a local storage file specified by the filePath.
@@ -99,7 +99,7 @@ public class Storage {
                     if (parts.length != TODO_FIELD_COUNT || parts[2].trim().isEmpty()) {
                         throw new AegisException("Incorrect todo format in file");
                     }
-                    addLoadedTask(loadedTasks, new ToDo(parts[2].trim(), isDone));
+                    addLoadedTask(loadedTasks, new Todo(parts[2].trim(), isDone));
                     break;
                 }
                 case "D": {

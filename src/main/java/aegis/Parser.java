@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import aegis.task.Deadline;
 import aegis.task.Event;
 import aegis.task.Task;
-import aegis.task.ToDo;
+import aegis.task.Todo;
 
 /**
  * Creates a Command object depending on the user's command.
@@ -128,11 +128,11 @@ public class Parser {
     }
 
     /**
-     * Creates a ToDo task from the given details.
+     * Creates a Todo task from the given details.
      * The details must contain a non-empty description.
      *
-     * @param details The description of the ToDo task, as provided by the user.
-     * @return A new ToDo task with the given description.
+     * @param details The description of the Todo task, as provided by the user.
+     * @return A new Todo task with the given description.
      * @throws AegisException If the description is empty or blank.
      */
     private Task createTodoTask(String details) throws AegisException {
@@ -140,7 +140,7 @@ public class Parser {
             throw new AegisException("A todo needs a tiny bit of description magic.");
         }
         ensureSafeText(details);
-        return new ToDo(details.trim(), false);
+        return new Todo(details.trim(), false);
     }
 
     /**

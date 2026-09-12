@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import aegis.task.Task;
-import aegis.task.ToDo;
+import aegis.task.Todo;
 
 public class StorageTest {
 
@@ -21,7 +21,7 @@ public class StorageTest {
         storage.parseTaskLine("T | 0 | borrow book", loadedTasks);
 
         assertEquals(1, loadedTasks.size());
-        assertInstanceOf(ToDo.class, loadedTasks.get(0));
+        assertInstanceOf(Todo.class, loadedTasks.get(0));
         assertEquals("borrow book", loadedTasks.get(0).getDescription());
     }
 
