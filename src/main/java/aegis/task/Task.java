@@ -74,4 +74,13 @@ public abstract class Task {
         return description;
     }
 
+    /**
+     * Checks whether another task has the same user-visible task details.
+     */
+    public boolean hasSameDetails(Task other) {
+        return other != null
+                && getClass().equals(other.getClass())
+                && description.equals(other.description);
+    }
+
 }

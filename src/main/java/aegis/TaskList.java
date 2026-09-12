@@ -39,6 +39,14 @@ public class TaskList {
     }
 
     /**
+     * Checks whether a task with the same type, description and date details already exists.
+     */
+    public boolean containsSameDetails(Task task) {
+        assert task != null : "Task to compare should not be null";
+        return tasks.stream().anyMatch(existingTask -> existingTask.hasSameDetails(task));
+    }
+
+    /**
      * Gets a task from the list given an index.
      */
     public Task get(int index) {

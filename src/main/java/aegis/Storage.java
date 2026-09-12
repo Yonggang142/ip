@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -59,47 +60,73 @@ public class Storage {
     }
 
     /**
+     * Adds a loaded task only if the save file has not already listed the same task details.
+     */
+    private void addLoadedTask(ArrayList<Task> loadedTasks, Task task) throws AegisException {
+        boolean isDuplicate = loadedTasks.stream().anyMatch(existingTask -> existingTask.hasSameDetails(task));
+        if (isDuplicate) {
+            throw new AegisException("Duplicate task in file");
+        }
+        loadedTasks.add(task);
+    }
+
+    /**
      * Parses the task line and initializes the loadedTasks list used to create a TaskList.
      */
     public void parseTaskLine(String currLine, ArrayList<Task> loadedTasks) throws AegisException {
+        assert currLine != null : "Saved task line should not be null";
+        assert loadedTasks != null : "Loaded task list should not be null";
+        if (currLine.isBlank()) {
+            return;
+        }
+
         String[] parts = currLine.split(" \\| ");
 
         if (parts.length < 2) {
             throw new AegisException("Incorrect format in file");
         }
 
-        String identifier = parts[0];
-        String status = parts[1];
+        String identifier = parts[0].trim();
+        String status = parts[1].trim();
         if (isInvalidStatus(status)) {
             throw new AegisException("Incorrect task status in file");
         }
 
         boolean isDone = status.equals(STATUS_DONE);
-        switch (identifier) {
-            case "T": {
-                if (parts.length != TODO_FIELD_COUNT) {
-                    throw new AegisException("Incorrect todo format in file");
+        try {
+            switch (identifier) {
+                case "T": {
+                    if (parts.length != TODO_FIELD_COUNT || parts[2].trim().isEmpty()) {
+                        throw new AegisException("Incorrect todo format in file");
+                    }
+                    addLoadedTask(loadedTasks, new ToDo(parts[2].trim(), isDone));
+                    break;
                 }
-                loadedTasks.add(new ToDo(parts[2], isDone));
-                break;
-            }
-            case "D": {
-                if (parts.length != DEADLINE_FIELD_COUNT) {
-                    throw new AegisException("Incorrect deadline format in file");
+                case "D": {
+                    if (parts.length != DEADLINE_FIELD_COUNT || parts[2].trim().isEmpty()) {
+                        throw new AegisException("Incorrect deadline format in file");
+                    }
+                    addLoadedTask(loadedTasks,
+                            new Deadline(parts[2].trim(), LocalDate.parse(parts[3].trim()), isDone));
+                    break;
                 }
-                loadedTasks.add(new Deadline(parts[2], LocalDate.parse(parts[3]), isDone));
-                break;
-            }
-            case "E": {
-                if (parts.length != EVENT_FIELD_COUNT) {
-                    throw new AegisException("Incorrect event format in file");
+                case "E": {
+                    if (parts.length != EVENT_FIELD_COUNT || parts[2].trim().isEmpty()) {
+                        throw new AegisException("Incorrect event format in file");
+                    }
+                    LocalDate start = LocalDate.parse(parts[3].trim());
+                    LocalDate end = LocalDate.parse(parts[4].trim());
+                    if (!start.isBefore(end)) {
+                        throw new AegisException("Incorrect event date order in file");
+                    }
+                    addLoadedTask(loadedTasks, new Event(parts[2].trim(), start, end, isDone));
+                    break;
                 }
-                loadedTasks.add(new Event(parts[2],
-                        LocalDate.parse(parts[3]), LocalDate.parse(parts[4]), isDone));
-                break;
+                default:
+                    throw new AegisException("Unknown information in file");
             }
-            default:
-                throw new AegisException("Unknown information in file");
+        } catch (DateTimeParseException e) {
+            throw new AegisException("Incorrect date format in file");
         }
     }
 
@@ -119,12 +146,11 @@ public class Storage {
         ensureFileExists(path);
 
         ArrayList<Task> loadedTasks = new ArrayList<>();
-        Scanner s = new Scanner(path);
-        while (s.hasNext()) {
-            String currLine = s.nextLine();
-
-            parseTaskLine(currLine, loadedTasks);
-
+        try (Scanner s = new Scanner(path)) {
+            while (s.hasNext()) {
+                String currLine = s.nextLine();
+                parseTaskLine(currLine, loadedTasks);
+            }
         }
         return loadedTasks;
     }
@@ -143,8 +169,8 @@ public class Storage {
                     .append(System.lineSeparator());
         }
 
-        FileWriter fw = new FileWriter(filePath);
-        fw.write(textToAdd.toString());
-        fw.close();
+        try (FileWriter fw = new FileWriter(filePath)) {
+            fw.write(textToAdd.toString());
+        }
     }
 }
