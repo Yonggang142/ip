@@ -45,4 +45,10 @@ public class Deadline extends Task {
         return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + end;
     }
 
+    @Override
+    public boolean hasSameDetails(Task other) {
+        return super.hasSameDetails(other)
+                && end.equals(((Deadline) other).end);
+    }
+
 }

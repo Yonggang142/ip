@@ -48,7 +48,10 @@ public class Command {
     /**
      * Adds this command's parsed task and saves the updated task list.
      */
-    private String executeAdd(TaskList tasks, Ui ui, Storage storage) throws IOException {
+    private String executeAdd(TaskList tasks, Ui ui, Storage storage) throws AegisException, IOException {
+        if (tasks.containsSameDetails(task)) {
+            throw new AegisException("This quest is already in your log. No clone army today.");
+        }
         tasks.add(task);
         storage.saveToFile(tasks);
         return ui.getTaskAddedMessage(task, tasks.size());

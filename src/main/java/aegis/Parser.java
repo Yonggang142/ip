@@ -2,6 +2,7 @@ package aegis;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.regex.Pattern;
 
 import aegis.task.Deadline;
 import aegis.task.Event;
@@ -15,6 +16,11 @@ import aegis.task.ToDo;
 public class Parser {
 
     private static final int PARTS_TO_SPLIT = 2;
+    private static final Pattern STORAGE_SEPARATOR = Pattern.compile("\\|");
+    private static final Pattern BY_SEPARATOR = Pattern.compile("\\s+/by(?:\\s+|$)");
+    private static final Pattern FROM_SEPARATOR = Pattern.compile("\\s+/from(?:\\s+|$)");
+    private static final Pattern TO_SEPARATOR = Pattern.compile("\\s+/to(?:\\s+|$)");
+
     /**
      * Parses the user command and creates the corresponding Command object.
      *
@@ -26,25 +32,78 @@ public class Parser {
     public Command parse(String userInput) throws AegisException {
 
         assert userInput != null : "User command should not be null";
-        String[] parts = userInput.split(" ", PARTS_TO_SPLIT);
+        String normalizedInput = userInput.trim().replaceAll("\\s+", " ");
+        if (normalizedInput.isEmpty()) {
+            throw new AegisException("Hmm, that command flew over my helmet. Try another one?");
+        }
+
+        String[] parts = normalizedInput.split(" ", PARTS_TO_SPLIT);
         assert parts.length >= 1 : "Splitting a command should always produce an action part";
 
         String action = parts[0];
         String details = parts.length > 1 ? parts[1] : "";
 
         return switch (action) {
-            case "bye" -> new Command("bye", null, 0, null);
-            case "list" -> new Command("list", null, 0, null);
+            case "bye" -> {
+                ensureNoDetails(action, details);
+                yield new Command("bye", null, 0, null);
+            }
+            case "list" -> {
+                ensureNoDetails(action, details);
+                yield new Command("list", null, 0, null);
+            }
             case "todo" -> new Command("todo", createTodoTask(details), 0, null);
             case "deadline" -> new Command("deadline", createDeadlineTask(details), 0, null);
             case "event" -> new Command("event", createEventTask(details), 0, null);
             case "delete" -> new Command("delete", null, parseIndex(details), null);
             case "mark" -> new Command("mark", null, parseIndex(details), null);
             case "unmark" -> new Command("unmark", null, parseIndex(details), null);
-            case "find" -> new Command("find", null, 0, details);
-            case "sort" -> new Command("sort", null, 0, null);
+            case "find" -> new Command("find", null, 0, parseKeyword(details));
+            case "sort" -> {
+                ensureNoDetails(action, details);
+                yield new Command("sort", null, 0, null);
+            }
             default -> throw new AegisException("Hmm, that command flew over my helmet. Try another one?");
         };
+    }
+
+    /**
+     * Rejects extra words for commands that do not accept parameters.
+     */
+    private void ensureNoDetails(String action, String details) throws AegisException {
+        if (!details.isBlank()) {
+            throw new AegisException(action + " is a solo command. No extra words needed.");
+        }
+    }
+
+    /**
+     * Rejects descriptions that cannot be saved safely in the task file.
+     */
+    private void ensureSafeText(String text) throws AegisException {
+        if (STORAGE_SEPARATOR.matcher(text).find()) {
+            throw new AegisException("Please avoid the | character; it tangles up my save file.");
+        }
+    }
+
+    /**
+     * Counts how many times a command parameter appears in the user input.
+     */
+    private int countParameter(String details, String parameter) {
+        return (int) Pattern.compile("(?<!\\S)" + Pattern.quote(parameter) + "(?!\\S)")
+                .matcher(details)
+                .results()
+                .count();
+    }
+
+    /**
+     * Parses and validates a user-provided date.
+     */
+    private LocalDate parseDate(String dateText) throws AegisException {
+        try {
+            return LocalDate.parse(dateText.trim());
+        } catch (DateTimeParseException e) {
+            throw new AegisException("Dates need the YYYY-MM-DD disguise.");
+        }
     }
 
     /**
@@ -57,6 +116,9 @@ public class Parser {
     private int parseIndex(String details) throws AegisException {
         if (details.trim().isEmpty()) {
             throw new AegisException("Give me a task number so I know which quest to poke.");
+        }
+        if (!details.trim().matches("\\d+")) {
+            throw new AegisException("That task number looks wobbly. Try a whole number.");
         }
         try {
             return Integer.parseInt(details.trim()) - 1;
@@ -77,7 +139,8 @@ public class Parser {
         if (details.trim().isEmpty()) {
             throw new AegisException("A todo needs a tiny bit of description magic.");
         }
-        return new ToDo(details, false);
+        ensureSafeText(details);
+        return new ToDo(details.trim(), false);
     }
 
     /**
@@ -91,27 +154,28 @@ public class Parser {
      *                        date is empty, or the date is not in YYYY-MM-DD format.
      */
     private Task createDeadlineTask(String details) throws AegisException {
-        if (!details.contains(" /by ")) {
+        int byCount = countParameter(details, "/by");
+        if (byCount == 0) {
             throw new AegisException("Deadline quests need a /by date.");
         }
+        if (byCount > 1) {
+            throw new AegisException("Deadline quests can only have one /by date.");
+        }
 
-        String[] deadlineParts = details.split(" /by ", PARTS_TO_SPLIT);
+        String[] deadlineParts = BY_SEPARATOR.split(details, PARTS_TO_SPLIT);
 
         assert deadlineParts.length == 2 : "Deadline details should contain exactly one parsed /by separator";
 
-        String description = deadlineParts[0];
-        String by = deadlineParts[1];
+        String description = deadlineParts[0].trim();
+        String by = deadlineParts[1].trim();
         if (description.trim().isEmpty()) {
             throw new AegisException("A deadline needs a description before I can guard it.");
         }
         if (by.trim().isEmpty()) {
             throw new AegisException("The /by date is empty. Give me a date to chase.");
         }
-        try {
-            return new Deadline(description, LocalDate.parse(by), false);
-        } catch (DateTimeParseException e) {
-            throw new AegisException("Dates need the YYYY-MM-DD disguise.");
-        }
+        ensureSafeText(description);
+        return new Deadline(description, parseDate(by), false);
     }
 
     /**
@@ -126,26 +190,34 @@ public class Parser {
      *                        in YYYY-MM-DD format.
      */
     private Task createEventTask(String details) throws AegisException {
-        if (!details.contains(" /from ")) {
+        int fromCount = countParameter(details, "/from");
+        int toCount = countParameter(details, "/to");
+        if (fromCount == 0) {
             throw new AegisException("Event quests need a /from date.");
         }
 
-        if (!details.contains(" /to ")) {
+        if (toCount == 0) {
             throw new AegisException("Event quests need a /to date.");
         }
+        if (fromCount > 1) {
+            throw new AegisException("Event quests can only have one /from date.");
+        }
+        if (toCount > 1) {
+            throw new AegisException("Event quests can only have one /to date.");
+        }
 
-        String[] eventParts = details.split(" /from ", PARTS_TO_SPLIT);
+        String[] eventParts = FROM_SEPARATOR.split(details, PARTS_TO_SPLIT);
         assert eventParts.length == 2 : "Event details should contain exactly one parsed /from separator";
-        String[] timeParts = eventParts[1].split(" /to ", PARTS_TO_SPLIT);
+        String[] timeParts = TO_SEPARATOR.split(eventParts[1], PARTS_TO_SPLIT);
 
         if (timeParts.length < 2) {
             throw new AegisException("Event quests need a /to date.");
         }
         assert timeParts.length == 2 : "Event details should contain exactly one parsed /to separator";
 
-        String description = eventParts[0];
-        String from = timeParts[0];
-        String to = timeParts[1];
+        String description = eventParts[0].trim();
+        String from = timeParts[0].trim();
+        String to = timeParts[1].trim();
         if (description.trim().isEmpty()) {
             throw new AegisException("An event needs a description before it joins the party.");
         }
@@ -155,11 +227,25 @@ public class Parser {
         if (to.trim().isEmpty()) {
             throw new AegisException("The /to date is empty. Give this event a finish line.");
         }
-        try {
-            return new Event(description, LocalDate.parse(from), LocalDate.parse(to), false);
-        } catch (DateTimeParseException e) {
-            throw new AegisException("Dates need the YYYY-MM-DD disguise.");
+        ensureSafeText(description);
+        LocalDate start = parseDate(from);
+        LocalDate end = parseDate(to);
+        if (!start.isBefore(end)) {
+            throw new AegisException("Event quests need a /from date before the /to date.");
         }
+        return new Event(description, start, end, false);
+    }
+
+    /**
+     * Parses the keyword used by find.
+     */
+    private String parseKeyword(String details) throws AegisException {
+        String keyword = details.trim();
+        if (keyword.isEmpty()) {
+            throw new AegisException("Give me a search word so I can sniff out matching quests.");
+        }
+        ensureSafeText(keyword);
+        return keyword;
     }
 
 }

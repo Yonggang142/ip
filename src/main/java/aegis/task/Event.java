@@ -51,5 +51,12 @@ public class Event extends Task {
         return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + start + " | " + end;
     }
 
+    @Override
+    public boolean hasSameDetails(Task other) {
+        return super.hasSameDetails(other)
+                && start.equals(((Event) other).start)
+                && end.equals(((Event) other).end);
+    }
+
 
 }

@@ -27,7 +27,15 @@ public class ParserTest {
     public void parseTodo_emptyDescription_throwsAegisException() {
         AegisException e = assertThrows(AegisException.class, () ->
                 new Parser().parse("todo   "));
-        assertEquals("The description of a todo cannot be empty.", e.getMessage());
+        assertEquals("A todo needs a tiny bit of description magic.", e.getMessage());
+    }
+
+    @Test
+    public void parseTodo_leadingAndMultipleSpaces_returnsTrimmedToDo() throws AegisException {
+        Command command = new Parser().parse("   todo    borrow    book   ");
+        Task task = command.getTask();
+        assertInstanceOf(ToDo.class, task);
+        assertEquals("borrow book", task.getDescription());
     }
 
     @Test
@@ -42,7 +50,7 @@ public class ParserTest {
     public void parseDeadline_invalidDate_throwsAegisException() {
         AegisException e = assertThrows(AegisException.class, () ->
                 new Parser().parse("deadline return book /by 22-08-2026"));
-        assertEquals("Dates must be in YYYY-MM-DD format.", e.getMessage());
+        assertEquals("Dates need the YYYY-MM-DD disguise.", e.getMessage());
     }
 
     @Test
@@ -57,7 +65,14 @@ public class ParserTest {
     public void parseEvent_invalidDate_throwsAegisException() {
         AegisException e = assertThrows(AegisException.class, () ->
                 new Parser().parse("event meeting /from 22-08-2026 /to 23-08-2026"));
-        assertEquals("Dates must be in YYYY-MM-DD format.", e.getMessage());
+        assertEquals("Dates need the YYYY-MM-DD disguise.", e.getMessage());
+    }
+
+    @Test
+    public void parseEvent_startDateSameAsEndDate_throwsAegisException() {
+        AegisException e = assertThrows(AegisException.class, () ->
+                new Parser().parse("event meeting /from 2026-08-22 /to 2026-08-22"));
+        assertEquals("Event quests need a /from date before the /to date.", e.getMessage());
     }
 
 }
