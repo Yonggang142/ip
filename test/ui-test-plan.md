@@ -20,21 +20,21 @@ ____________________________________________________________
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
-Hi! This is Aegis!
-What can I do for you today?
+Hey there! Aegis is awake and ready to help.
+What quest are we tackling today?
 
 ____________________________________________________________
 ____________________________________________________________
-OK, I've added a new task: 
+Ta-da! I added this task:
 [T][ ] borrow book
-Now you have 1 tasks in the list
+You now have 1 task in your quest log.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in the list:
+Here is your current quest log:
 1.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
-Bye. See you soon!
+Bye for now! Your tasks and I will behave.
 ____________________________________________________________
 ```
 
@@ -57,24 +57,24 @@ ____________________________________________________________
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
-Hi! This is Aegis!
-What can I do for you today?
+Hey there! Aegis is awake and ready to help.
+What quest are we tackling today?
 
 ____________________________________________________________
 ____________________________________________________________
-Please give me a task number
+Give me a task number so I know which quest to poke.
 ____________________________________________________________
 ____________________________________________________________
-OK, I've added a new task: 
+Ta-da! I added this task:
 [T][ ] ok
-Now you have 1 tasks in the list
+You now have 1 task in your quest log.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in the list:
+Here is your current quest log:
 1.[T][ ] ok
 ____________________________________________________________
 ____________________________________________________________
-Bye. See you soon!
+Bye for now! Your tasks and I will behave.
 ____________________________________________________________
 ```
 
@@ -97,24 +97,24 @@ ____________________________________________________________
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
-Hi! This is Aegis!
-What can I do for you today?
+Hey there! Aegis is awake and ready to help.
+What quest are we tackling today?
 
 ____________________________________________________________
 ____________________________________________________________
-Please include /by for deadlines.
+Deadline quests need a /by date.
 ____________________________________________________________
 ____________________________________________________________
-OK, I've added a new task: 
+Ta-da! I added this task:
 [T][ ] after
-Now you have 1 tasks in the list
+You now have 1 task in your quest log.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in the list:
+Here is your current quest log:
 1.[T][ ] after
 ____________________________________________________________
 ____________________________________________________________
-Bye. See you soon!
+Bye for now! Your tasks and I will behave.
 ____________________________________________________________
 ```
 
@@ -137,24 +137,24 @@ ____________________________________________________________
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
-Hi! This is Aegis!
-What can I do for you today?
+Hey there! Aegis is awake and ready to help.
+What quest are we tackling today?
 
 ____________________________________________________________
 ____________________________________________________________
-Please include /to for events.
+Event quests need a /to date.
 ____________________________________________________________
 ____________________________________________________________
-OK, I've added a new task: 
+Ta-da! I added this task:
 [T][ ] after
-Now you have 1 tasks in the list
+You now have 1 task in your quest log.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in the list:
+Here is your current quest log:
 1.[T][ ] after
 ____________________________________________________________
 ____________________________________________________________
-Bye. See you soon!
+Bye for now! Your tasks and I will behave.
 ____________________________________________________________
 ```
 
@@ -178,30 +178,30 @@ ____________________________________________________________
 | |_| | |_| |   <  __/
 |____/ \__,_|_|\_\___|
 
-Hi! This is Aegis!
-What can I do for you today?
+Hey there! Aegis is awake and ready to help.
+What quest are we tackling today?
 
 ____________________________________________________________
 ____________________________________________________________
-OK, I've added a new task: 
+Ta-da! I added this task:
 [T][ ] first
-Now you have 1 tasks in the list
+You now have 1 task in your quest log.
 ____________________________________________________________
 ____________________________________________________________
-OK, I've added a new task: 
+Ta-da! I added this task:
 [T][ ] second
-Now you have 2 tasks in the list
+You now have 2 tasks in your quest log.
 ____________________________________________________________
 ____________________________________________________________
-I've deleted this task for you
+Poof! I removed this task:
 [T][ ] first
-Now you have 1 tasks in the list.
+You now have 1 task in your quest log.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in the list:
+Here is your current quest log:
 1.[T][ ] second
 ____________________________________________________________
 ____________________________________________________________
-Bye. See you soon!
+Bye for now! Your tasks and I will behave.
 ____________________________________________________________
 ```

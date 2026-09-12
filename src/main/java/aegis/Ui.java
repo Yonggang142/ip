@@ -12,11 +12,11 @@ import aegis.task.Task;
 public class Ui {
 
     private static final String START_MESSAGE = """
-            Hi! This is Aegis!
-            What can I do for you today?
+            Hey there! Aegis is awake and ready to help.
+            What quest are we tackling today?
             """;
 
-    private static final String END_MESSAGE = "Bye. See you soon!";
+    private static final String END_MESSAGE = "Bye for now! Your tasks and I will behave.";
 
     private static final String BANNER = """
                 _              _    \s
@@ -45,7 +45,7 @@ public class Ui {
      * Returns a loading error message.
      */
     public String getLoadingErrorMessage() {
-        return "Error with loading tasks from storage";
+        return "Oops, I tripped while loading your saved tasks.";
     }
 
     /**
@@ -59,16 +59,16 @@ public class Ui {
      * Returns a message when the command is invalid.
      */
     public String getDefaultMessage() {
-        return "Sorry, I have no idea what it means!";
+        return "Hmm, that command flew over my helmet. Try another one?";
     }
 
     /**
      * Returns a message when a task is being added.
      */
     public String getTaskAddedMessage(Task task, int totalTasks) {
-        return "OK, I've added a new task: \n"
+        return "Ta-da! I added this task:\n"
                 + task + "\n"
-                + "Now you have " + totalTasks + " tasks in the list";
+                + "You now have " + totalTasks + " " + getTaskWord(totalTasks) + " in your quest log.";
     }
 
     /**
@@ -76,7 +76,7 @@ public class Ui {
      */
     public String getTaskListMessage(TaskList tasks) {
         StringBuilder message = new StringBuilder();
-        message.append("Here are the tasks in the list:").append("\n");
+        message.append("Here is your current quest log:").append("\n");
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
             message.append(i + 1).append(".").append(task).append("\n");
@@ -88,9 +88,9 @@ public class Ui {
      * Returns a confirmation that a task has been deleted.
      */
     public String getDeletedTaskMessage(Task task, int totalTasks) {
-        return "I've deleted this task for you\n"
+        return "Poof! I removed this task:\n"
                 + task + "\n"
-                + "Now you have " + totalTasks + " tasks in the list.";
+                + "You now have " + totalTasks + " " + getTaskWord(totalTasks) + " in your quest log.";
     }
 
     /**
@@ -99,9 +99,9 @@ public class Ui {
     public String getTaskStatusMessage(Task task, boolean isDone) {
         StringBuilder message = new StringBuilder();
         if (isDone) {
-            message.append("Nice! I've marked this task as done:").append("\n");
+            message.append("Victory! I marked this task as done:").append("\n");
         } else {
-            message.append("OK, I've marked this task as not done yet:").append("\n");
+            message.append("No worries, I put this task back in play:").append("\n");
         }
         message.append(task);
         return message.toString();
@@ -112,7 +112,7 @@ public class Ui {
      */
     public String getFindMessage(TaskList tasks, String tag) {
         StringBuilder message = new StringBuilder();
-        message.append("Here are the matching tasks from the list: ").append("\n");
+        message.append("I found these matching quests:").append("\n");
 
         ArrayList<Task> matchingTasks = tasks.getMatchingTasks(tag);
         for (Task matchingTask : matchingTasks) {
@@ -134,12 +134,19 @@ public class Ui {
     }
 
     /**
+     * Returns the correctly pluralised word for a task count.
+     */
+    private String getTaskWord(int totalTasks) {
+        return totalTasks == 1 ? "task" : "tasks";
+    }
+
+    /**
      * Sorts the TaskList, stores the sorted list in files, and returns the sorted list message.
      */
     public String getSortedListMessage(TaskList tasks, Storage storage) throws IOException {
         tasks.sortByDate();
         storage.saveToFile(tasks);
-        return "I have sorted your tasks by date, here are your tasks: \n" + getTaskListMessage(tasks);
+        return "I shuffled your quests into date order:\n" + getTaskListMessage(tasks);
     }
 
 }
