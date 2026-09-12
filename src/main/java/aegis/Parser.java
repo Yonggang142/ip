@@ -43,7 +43,7 @@ public class Parser {
             case "unmark" -> new Command("unmark", null, parseIndex(details), null);
             case "find" -> new Command("find", null, 0, details);
             case "sort" -> new Command("sort", null, 0, null);
-            default -> throw new AegisException("Sorry, I have no idea what it means!");
+            default -> throw new AegisException("Hmm, that command flew over my helmet. Try another one?");
         };
     }
 
@@ -56,12 +56,12 @@ public class Parser {
      */
     private int parseIndex(String details) throws AegisException {
         if (details.trim().isEmpty()) {
-            throw new AegisException("Please give me a task number");
+            throw new AegisException("Give me a task number so I know which quest to poke.");
         }
         try {
             return Integer.parseInt(details.trim()) - 1;
         } catch (NumberFormatException e) {
-            throw new AegisException("Please give me a valid task number");
+            throw new AegisException("That task number looks wobbly. Try a whole number.");
         }
     }
 
@@ -75,7 +75,7 @@ public class Parser {
      */
     private Task createTodoTask(String details) throws AegisException {
         if (details.trim().isEmpty()) {
-            throw new AegisException("The description of a todo cannot be empty.");
+            throw new AegisException("A todo needs a tiny bit of description magic.");
         }
         return new ToDo(details, false);
     }
@@ -92,7 +92,7 @@ public class Parser {
      */
     private Task createDeadlineTask(String details) throws AegisException {
         if (!details.contains(" /by ")) {
-            throw new AegisException("Please include /by for deadlines.");
+            throw new AegisException("Deadline quests need a /by date.");
         }
 
         String[] deadlineParts = details.split(" /by ", PARTS_TO_SPLIT);
@@ -102,15 +102,15 @@ public class Parser {
         String description = deadlineParts[0];
         String by = deadlineParts[1];
         if (description.trim().isEmpty()) {
-            throw new AegisException("The description of a deadline cannot be empty.");
+            throw new AegisException("A deadline needs a description before I can guard it.");
         }
         if (by.trim().isEmpty()) {
-            throw new AegisException("The deadline time cannot be empty.");
+            throw new AegisException("The /by date is empty. Give me a date to chase.");
         }
         try {
             return new Deadline(description, LocalDate.parse(by), false);
         } catch (DateTimeParseException e) {
-            throw new AegisException("Dates must be in YYYY-MM-DD format.");
+            throw new AegisException("Dates need the YYYY-MM-DD disguise.");
         }
     }
 
@@ -127,11 +127,11 @@ public class Parser {
      */
     private Task createEventTask(String details) throws AegisException {
         if (!details.contains(" /from ")) {
-            throw new AegisException("Please include /from for events.");
+            throw new AegisException("Event quests need a /from date.");
         }
 
         if (!details.contains(" /to ")) {
-            throw new AegisException("Please include /to for events.");
+            throw new AegisException("Event quests need a /to date.");
         }
 
         String[] eventParts = details.split(" /from ", PARTS_TO_SPLIT);
@@ -139,7 +139,7 @@ public class Parser {
         String[] timeParts = eventParts[1].split(" /to ", PARTS_TO_SPLIT);
 
         if (timeParts.length < 2) {
-            throw new AegisException("Please include /to for events.");
+            throw new AegisException("Event quests need a /to date.");
         }
         assert timeParts.length == 2 : "Event details should contain exactly one parsed /to separator";
 
@@ -147,18 +147,18 @@ public class Parser {
         String from = timeParts[0];
         String to = timeParts[1];
         if (description.trim().isEmpty()) {
-            throw new AegisException("The description of an event cannot be empty.");
+            throw new AegisException("An event needs a description before it joins the party.");
         }
         if (from.trim().isEmpty()) {
-            throw new AegisException("Starting time cannot be empty.");
+            throw new AegisException("The /from date is empty. Give this event a starting point.");
         }
         if (to.trim().isEmpty()) {
-            throw new AegisException("Ending time cannot be empty.");
+            throw new AegisException("The /to date is empty. Give this event a finish line.");
         }
         try {
             return new Event(description, LocalDate.parse(from), LocalDate.parse(to), false);
         } catch (DateTimeParseException e) {
-            throw new AegisException("Dates must be in YYYY-MM-DD format.");
+            throw new AegisException("Dates need the YYYY-MM-DD disguise.");
         }
     }
 

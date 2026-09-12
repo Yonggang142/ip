@@ -41,7 +41,7 @@ public class Command {
      */
     private void checkIndexValidity(TaskList tasks) throws AegisException {
         if (index < 0 || index >= tasks.size()) {
-            throw new AegisException("Sorry, that task number does not exist.");
+            throw new AegisException("That quest number is hiding outside the list.");
         }
     }
 
