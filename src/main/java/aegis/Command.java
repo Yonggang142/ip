@@ -42,7 +42,7 @@ public class Command {
      */
     private void checkIndexValidity(TaskList tasks) throws AegisException {
         if (index < 0 || index >= tasks.size()) {
-            throw new AegisException("That quest number is hiding outside the list.");
+            throw new AegisException("That task number is hiding outside the list.");
         }
     }
 
@@ -51,7 +51,7 @@ public class Command {
      */
     private String executeAdd(TaskList tasks, TextUi ui, Storage storage) throws AegisException, IOException {
         if (tasks.containsSameDetails(task)) {
-            throw new AegisException("This quest is already in your log. No clone army today.");
+            throw new AegisException("This task is already in your log. No clone army today.");
         }
         tasks.add(task);
         storage.saveToFile(tasks);

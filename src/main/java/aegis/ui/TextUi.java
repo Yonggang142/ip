@@ -83,7 +83,7 @@ public class TextUi {
     public String getDeletedTaskMessage(Task task, int totalTasks) {
         return "Ta-Da! I removed this task:\n"
                 + task + "\n"
-                + "You now have " + totalTasks + " " + getTaskWord(totalTasks) + " in your quest log.";
+                + "You now have " + totalTasks + " " + getTaskWord(totalTasks) + " in your task list.";
     }
 
     /**

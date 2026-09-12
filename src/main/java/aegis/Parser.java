@@ -114,7 +114,7 @@ public class Parser {
      */
     private int parseIndex(String details) throws AegisException {
         if (details.trim().isEmpty()) {
-            throw new AegisException("Give me a task number so I know which quest to poke.");
+            throw new AegisException("Give me a task number so I know which task to poke.");
         }
         if (!details.trim().matches("\\d+")) {
             throw new AegisException("That task number looks wobbly. Try a whole number.");

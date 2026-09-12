@@ -79,7 +79,7 @@ public class ParserTest {
     public void parseEvent_missingDescription_throwsAegisException() {
         AegisException e = assertThrows(AegisException.class, () ->
                 new Parser().parse("event /from 2026-08-22 /to 2026-08-23"));
-        assertEquals("An event needs a description before it joins the party.", e.getMessage());
+        assertEquals("An event needs a description!", e.getMessage());
     }
 
     @Test

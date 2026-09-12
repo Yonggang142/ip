@@ -54,7 +54,7 @@ Expected response:
 ```text
 Ta-da! I added this task:
 [T][ ] borrow book
-You now have 1 task in your quest log.
+You now have 1 task in your task list.
 ```
 
 ### Add a Deadline
@@ -78,7 +78,7 @@ Expected response:
 ```text
 Ta-da! I added this task:
 [D][ ] return book (by: Sept 20 2026)
-You now have 2 tasks in your quest log.
+You now have 2 tasks in your task list.
 ```
 
 ### Add an Event
@@ -102,12 +102,12 @@ Expected response:
 ```text
 Ta-da! I added this task:
 [E][ ] project meeting (from: Sept 20 2026 to: Sept 21 2026)
-You now have 3 tasks in your quest log.
+You now have 3 tasks in your task list.
 ```
 
 ### List Tasks
 
-Shows all tasks currently saved in your quest log.
+Shows all tasks currently saved in your task list.
 
 Command format:
 
@@ -118,7 +118,7 @@ list
 Expected response:
 
 ```text
-Here is your current quest log:
+Here is your current task list:
 1.[T][ ] borrow book
 2.[D][ ] return book (by: Sept 20 2026)
 3.[E][ ] project meeting (from: Sept 20 2026 to: Sept 21 2026)
@@ -144,7 +144,7 @@ unmark 1
 
 ### Delete a Task
 
-Removes a task from the quest log.
+Removes a task from the task list.
 
 Command format:
 
