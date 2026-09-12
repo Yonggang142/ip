@@ -209,7 +209,7 @@ public class Parser {
 
         String[] eventParts = FROM_SEPARATOR.split(details, PARTS_TO_SPLIT);
         if (eventParts.length < 2) {
-            throw new AegisException("An event needs a description!.");
+            throw new AegisException("An event needs a description!");
         }
         String[] timeParts = TO_SEPARATOR.split(eventParts[1], PARTS_TO_SPLIT);
 
@@ -222,7 +222,7 @@ public class Parser {
         String from = timeParts[0].trim();
         String to = timeParts[1].trim();
         if (description.trim().isEmpty()) {
-            throw new AegisException("An event needs a description!.");
+            throw new AegisException("An event needs a description!");
         }
         if (from.trim().isEmpty()) {
             throw new AegisException("The /from date is empty. Give this event a starting point.");
