@@ -65,6 +65,13 @@ public class Aegis {
     }
 
     /**
+     * Returns the opening message shown when a chat session starts.
+     */
+    public String getStartMessage() {
+        return ui.getStartMessage();
+    }
+
+    /**
      * Processes one user input and returns the chatbot response for the GUI.
      */
     public String getResponse(String input) {

@@ -36,6 +36,7 @@ public class MainWindow extends AnchorPane {
     /** Injects the Aegis instance. */
     public void setAegis(Aegis aegis) {
         this.aegis = aegis;
+        dialogContainer.getChildren().add(DialogBox.getAegisDialog(aegis.getStartMessage(), aegisImage));
     }
 
     /**
