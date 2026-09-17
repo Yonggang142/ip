@@ -1,6 +1,7 @@
 package aegis.ui;
 
 import aegis.Aegis;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -30,7 +31,14 @@ public class MainWindow extends AnchorPane {
 
     @FXML
     public void initialize() {
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        dialogContainer.heightProperty().addListener((observable, oldValue, newValue) -> scrollToLatestDialog());
+    }
+
+    /**
+     * Scrolls to the latest dialog after JavaFX has recalculated the layout.
+     */
+    private void scrollToLatestDialog() {
+        Platform.runLater(() -> scrollPane.setVvalue(scrollPane.getVmax()));
     }
 
     /** Injects the Aegis instance. */
